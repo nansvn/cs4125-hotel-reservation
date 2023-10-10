@@ -1,5 +1,6 @@
 package com.project.hotelreservation.controller;
 
+
 import com.project.hotelreservation.entity.Customer;
 import com.project.hotelreservation.entity.User;
 import com.project.hotelreservation.service.UserService;
@@ -7,38 +8,33 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-public class LoginController {
+public class RegisterController {
     private final UserService userService;
 
-    @GetMapping("/login")
-    public String showLoginPage() {
-        return "index";
+    @GetMapping("/register")
+    public String showRegisterPage(Model model) {
+        model.addAttribute("customer", new Customer());
+        return "register";
     }
 
-    @PostMapping("/login")
-    public String login(
-            @RequestParam("username") String username,
-            @RequestParam("password") String password,
-            Model model) {
+    @PostMapping("/register")
+    public String register(@ModelAttribute("customer") Customer customer, Model model) {
+        String username = customer.getUsername();
         Optional<User> user = userService.findUserByUsername(username);
-        if (user.isPresent() && user.get().getPassword().equals(password)) {
-            if (user.get().getRole().equals("admin")) {
-                return "redirect:/admin";
-            } else {
-                return "redirect:/homepage";
-            }
+        if (user.isPresent()) {
+            model.addAttribute("customer", new Customer());
+            model.addAttribute("registerError", "Username already exists");
+            return "register";
         } else {
-            model.addAttribute("message", "Invalid username or password");
+            userService.save(customer);
             return "index";
         }
     }
-
 }
-

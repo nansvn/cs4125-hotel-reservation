@@ -9,15 +9,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public Optional<Customer> findUserByUsername(String username) {
+    public Optional<User> findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
-}
 
+    @Override
+    public void save(Customer customer) {
+        customer.setRole("customer");
+        customer.setRewardPoints(0);
+        userRepository.save(customer);
+    }
+
+}

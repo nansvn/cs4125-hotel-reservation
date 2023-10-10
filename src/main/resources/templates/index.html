@@ -16,7 +16,6 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
-
 </head>
 
 <body>
@@ -25,10 +24,13 @@
         <div class="row">
             <div class="col-12 col-sm-8 col-md-6 m-auto">
                 <div class="card">
+                    <!-- icon using font awesome -->
                     <i class="fas fa-hotel fa-5x text-center pt-5"></i>
                     <div class="card-body border-0 shadow px-5">
-                        <form th:action="@{/login}">
-                            <p class="text-center text-danger" th:text="${message}" th:if="${not #strings.isEmpty(message)}"></p>
+                        <form th:action="@{/login}" method="post">
+                            <!-- error message -->
+                            <p th:if="${message}" th:text="${message}" class="text-center text-danger"></p>
+                            <!-- user input -->
                             <input type="text" name="username" id="username" class="form-control my-3 py-2"
                                    placeholder="username">
                             <input type="text" name="password" id="password" class="form-control my-3 py-2"
@@ -37,7 +39,7 @@
                                 <button class="btn btn-primary">Login</button>
                             </div>
                             <div class="text-center mt-3">
-                                <p>Not a member? <a th:href="@{/register.html}">Register</a></p>
+                                <p>Not a member? <a th:href="@{/register}">Register</a></p>
                             </div>
                         </form>
                     </div>

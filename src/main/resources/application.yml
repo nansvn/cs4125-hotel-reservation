@@ -14,4 +14,4 @@ spring:
     cache: false
 logging:
   level:
-    root=warn:
+    root: warn

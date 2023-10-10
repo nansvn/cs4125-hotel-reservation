@@ -1,9 +1,10 @@
 package com.project.hotelreservation.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class Customer extends User {
     @Column(name = "email", nullable = false)
     private String email;
+
     @Column(name = "firstName", nullable = false)
     private String firstName;
 
@@ -19,4 +21,5 @@ public class Customer extends User {
 
     @Column(name = "rewardPoints", nullable = false)
     private int rewardPoints;
+
 }
