@@ -1,13 +1,10 @@
-package com.project.hotelreservation.entity;
+package com.project.hotelreservation.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "user")
+@MappedSuperclass
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +16,4 @@ public class User {
 
     @Column(name = "password", nullable = false)
     private String password;
-
-    @Column(name = "role", nullable = false)
-    private String role;
 }

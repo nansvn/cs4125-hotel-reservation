@@ -1,18 +1,15 @@
-package com.project.hotelreservation.entity;
+package com.project.hotelreservation.model.entity;
 
 import jakarta.persistence.*;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+
+
 @EqualsAndHashCode(callSuper = true)
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "admin")
 public class Admin extends User {
-    @Column(name = "adminName")
+    @Column(name = "admin_name")
     private String adminName;
 }

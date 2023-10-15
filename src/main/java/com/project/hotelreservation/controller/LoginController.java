@@ -1,8 +1,9 @@
 package com.project.hotelreservation.controller;
 
-import com.project.hotelreservation.entity.Customer;
-import com.project.hotelreservation.entity.User;
-import com.project.hotelreservation.service.UserService;
+import com.project.hotelreservation.model.entity.Admin;
+import com.project.hotelreservation.model.entity.Customer;
+import com.project.hotelreservation.service.AdminService;
+import com.project.hotelreservation.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,8 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
-    private final UserService userService;
+    private final CustomerService customerService;
+    private final AdminService adminService;
 
     @GetMapping("/login")
     public String showLoginPage() {
@@ -27,18 +29,18 @@ public class LoginController {
             @RequestParam("username") String username,
             @RequestParam("password") String password,
             Model model) {
-        Optional<User> user = userService.findUserByUsername(username);
-        if (user.isPresent() && user.get().getPassword().equals(password)) {
-            if (user.get().getRole().equals("admin")) {
-                return "redirect:/admin";
-            } else {
-                return "redirect:/homepage";
-            }
+
+        Optional<Customer> customer = customerService.findByUsername(username);
+        Optional<Admin> admin = adminService.findByUsername(username);
+
+        if (customer.isPresent() && customer.get().getPassword().equals(password)) {
+            return "homepage";
+        } else if (admin.isPresent() && admin.get().getPassword().equals(password)) {
+            return "admin";
         } else {
-            model.addAttribute("message", "Invalid username or password");
+            model.addAttribute("invalidMessage", "Invalid username or password");
             return "index";
         }
     }
-
 }
 
