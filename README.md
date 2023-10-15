@@ -1,1 +1,1 @@
-# cs4125-hotel-reservation
+### Hotel reservation system using Java Spring Boot and Hibernate
