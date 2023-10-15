@@ -1,15 +1,10 @@
-package com.project.hotelreservation.entity;
+package com.project.hotelreservation.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "user")
+@MappedSuperclass
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
