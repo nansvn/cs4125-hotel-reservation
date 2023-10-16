@@ -50,7 +50,6 @@ public class RegisterController {
         logger.info("Successfully created customer: " + username);
 
         return "index";
-
     }
 }
 
