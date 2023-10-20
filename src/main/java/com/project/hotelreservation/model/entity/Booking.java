@@ -1,7 +1,9 @@
 package com.project.hotelreservation.model.entity;
 
+import com.project.hotelreservation.enums.BookingStatus;
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.util.Date;
 import java.util.List;
 
@@ -15,10 +17,22 @@ public class Booking {
     private Long id;
     private Date checkInDate;
     private Date checkOutDate;
+    private Date bookingDate;
 
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status;
+
+    @OneToOne
+    @JoinColumn(name = "room_id")
     private Room room;
 
+    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL)
+    private Payment payment;
+
     @ManyToMany
-    private List<Services> services;
+    @JoinTable(
+            name = "booking_services",
+            joinColumns = @JoinColumn(name = "booking_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id"))
+    private List<AdditionalServices> additionalServices;
 }
