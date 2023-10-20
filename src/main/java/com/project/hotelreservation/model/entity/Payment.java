@@ -26,6 +26,4 @@ public class Payment {
 
     @OneToOne
     private Booking booking;
-
-
 }

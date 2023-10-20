@@ -5,7 +5,7 @@ import lombok.*;
 
 @Data
 @MappedSuperclass
-public class User {
+public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
