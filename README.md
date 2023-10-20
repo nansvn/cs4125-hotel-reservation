@@ -1,1 +1,2 @@
-# cs4125-hotel-reservation
+## CS4125 Group Project
+### Hotel reservation system using Java Spring Boot and Thymeleaf
