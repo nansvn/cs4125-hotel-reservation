@@ -2,6 +2,9 @@ package com.project.hotelreservation.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "room")
@@ -23,4 +26,7 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "room_detail")
     private RoomDetail roomDetail;
+
+    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL)
+    private Booking booking;
 }

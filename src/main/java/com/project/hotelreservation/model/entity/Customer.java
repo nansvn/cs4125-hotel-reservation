@@ -21,5 +21,4 @@ public class Customer extends User {
 
     @Column(name = "reward_points", nullable = false)
     private int rewardPoints;
-
 }

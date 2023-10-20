@@ -25,7 +25,4 @@ public class RoomDetail {
 
     @Column(name = "image")
     private String image;
-
-    @ManyToMany
-    private List<Services> services;
 }
