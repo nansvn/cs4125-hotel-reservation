@@ -16,4 +16,4 @@ spring:
     suffix: .html
 logging:
   level:
-    root: warn
+    root: debug

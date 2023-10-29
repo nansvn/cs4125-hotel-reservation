@@ -1,5 +1,6 @@
 package com.project.hotelreservation.model.entity;
 
+import com.project.hotelreservation.enums.RoomType;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,8 +12,8 @@ import java.util.List;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "room_id")
+    private Integer roomId;
 
     @Column(name = "room_number")
     private String roomNumber;
@@ -23,9 +24,12 @@ public class Room {
     @Column(name = "available")
     private boolean available;
 
-    @ManyToOne
-    @JoinColumn(name = "room_detail")
-    private RoomDetail roomDetail;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "room_type")
+    private RoomType roomType;
+
+    @Column(name = "description")
+    private String description;
 
     @OneToOne(mappedBy = "room", cascade = CascadeType.ALL)
     private Booking booking;
