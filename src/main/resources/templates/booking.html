@@ -28,8 +28,8 @@
         <h3>Booking Form</h3>
         <br>
 
-        <!-- Reservation form -->
-        <form id="resForm" name="resForm" th:action="@{/proceed-reservation}" th:object="${newBooking}" method="POST">
+        <!-- Booking form -->
+        <form id="bookingForm" name="bookingForm" th:action="@{/booking}" th:object="${newBooking}" method="POST">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
             <div class="form-group">
@@ -63,13 +63,13 @@
 
             <!-- Number of Rooms -->
             <div class="form-group">
-                <label>Number of Rooms</label>
+                <label>Number of people</label>
                 <input class="form-control prc" id="room" th:field="*{room}" type="number" placeholder="Room" required />
             </div>
 
             <!-- Additional Services (if you have a list of services) -->
             <div class="form-group">
-                <label>Select Additional Services</label>
+                <label>Additional Services</label>
                 <select class="form-control prc" multiple="multiple" th:field="*{additionalServices}" required>
                     <option value="service1">Service 1</option>
                     <option value="service2">Service 2</option>

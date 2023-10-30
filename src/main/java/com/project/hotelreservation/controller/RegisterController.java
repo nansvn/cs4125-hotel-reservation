@@ -4,7 +4,6 @@ package com.project.hotelreservation.controller;
 import com.project.hotelreservation.model.WebCustomer;
 import com.project.hotelreservation.model.entity.Customer;
 import com.project.hotelreservation.service.CustomerService;
-import com.project.hotelreservation.utils.WebUtils;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +36,7 @@ public class RegisterController {
             @Valid
             @ModelAttribute("webCustomer") WebCustomer webCustomer,
             BindingResult theBindingResult,
+            HttpSession session,
             Model model) {
         if (theBindingResult.hasErrors()) {
             return "register";
@@ -56,7 +56,7 @@ public class RegisterController {
 
         logger.info("Successfully created customer: " + username);
 
-        WebUtils.getSession().setAttribute("customer", webCustomer);
+        session.setAttribute("customer", webCustomer);
 
         return "login";
     }
