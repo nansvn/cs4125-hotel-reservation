@@ -29,13 +29,13 @@
         <br>
 
         <!-- Reservation form -->
-        <form id="resForm" name="resForm" th:action="@{/proceed-reservation}" th:object="${newRes}" method="POST">
+        <form id="resForm" name="resForm" th:action="@{/proceed-reservation}" th:object="${newBooking}" method="POST">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
             <div class="form-group">
 
                 <!-- Room Type -->
-                <input type="hidden" th:field="*{id}" />
+                <input type="hidden" th:field="*{booking_id}" />
                 <label>Room Type</label>
                 <select class="form-control prc" th:field="*{room}" id="room_type" required>
                     <option value="Single Deluxe">Single Deluxe</option>

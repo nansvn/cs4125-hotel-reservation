@@ -7,15 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @Controller
 public class CustomerRoomController {
     //Display list of rooms
     @Autowired
     private RoomService roomService;
-    @GetMapping("/room")
-    public String viewRoomPage(Model model){
-        model.addAttribute("listRooms",roomService.getAllRooms());
-    return "room";
-    }
 
+    @GetMapping("/room")
+    public String viewRoomPage(Model model) {
+        List<Room> rooms = roomService.getAllRooms();
+        model.addAttribute("rooms",rooms);
+        return "room";
+    }
 }
