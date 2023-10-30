@@ -1,15 +1,14 @@
 package com.project.hotelreservation.controller;
 
-import com.project.hotelreservation.model.entity.AdditionalServices;
 import com.project.hotelreservation.service.AdditionalServicesService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
+@AllArgsConstructor
 public class AdditionalServicesController {
-    @Autowired
     private AdditionalServicesService additionalServicesService;
 
     @GetMapping("/additionalservices")

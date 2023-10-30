@@ -25,28 +25,43 @@
 <!--navbar-->
 <div th:include="navbar :: navbar"></div>
 
-<!-- Main buttons and title -->
-<div class="container">
-    <h2 class="display-4">Blue Roof Hotels</h2>
-    <div class="btn btn-main">
-        <a th:href="@{/booking}" class="btn btn-primary btn-lg">Book Now</a>
-        <a th:href="@{/viewOrders}" class="btn btn-secondary btn-lg">Your Orders</a>
-    </div>
+<!-- Main content -->
+
+<div class="container col-md-6 text-center">
+    <h4>Hello, <span th:text="${session.customer.getFirstName()}"></span></h4>
+    <!-- Display other properties of the object as needed -->
+    <form th:action="@{/search}" method="get" class="mt-4">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="checkInDate">Check-in Date</label>
+                <input type="date" class="form-control" id="checkInDate" name="checkInDate" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="checkOutDate">Check-out Date</label>
+                <input type="date" class="form-control" id="checkOutDate" name="checkOutDate" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="people">Number of People</label>
+                <input type="number" class="form-control" id="people" name="people" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
 </div>
 
-
-<!-- Cards Section -->
-<section class="cards-section text-center">
+<section class="cards-section text-center mt-4">
     <div class="container">
-        <div class="row">
-            <!-- Rooms Card -->
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Rooms</h5>
-                        <p class="card-text">Explore our comfortable rooms.</p>
-                        <a th:href="@{/room}" class="btn btn-primary">View Rooms</a>
-                    </div>
+        <h5>Our Rooms</h5>
+        <div th:each="room : ${rooms}" class="cards">
+            <div class="card col-md-4">
+                <img th:src="${room.imagePath}" class="card-img-top" alt="room image">
+                <div class="card-body">
+                    <h5 class="card-title"
+                        th:text="${#strings.capitalize(room.roomType.toString().toLowerCase())}
+                    + ' '
+                    + ${#strings.capitalize(room.bedSize.toString().toLowerCase())}"></h5>
+                    <p class="card-text" th:text="'Price per night: '+${room.price}"></p>
+                    <p class="card-text" th:text="${room.description}"></p>
                 </div>
             </div>
         </div>

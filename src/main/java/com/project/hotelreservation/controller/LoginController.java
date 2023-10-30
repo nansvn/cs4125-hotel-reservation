@@ -4,7 +4,6 @@ import com.project.hotelreservation.model.entity.Admin;
 import com.project.hotelreservation.model.entity.Customer;
 import com.project.hotelreservation.service.AdminService;
 import com.project.hotelreservation.service.CustomerService;
-import com.project.hotelreservation.utils.WebUtils;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -30,16 +29,17 @@ public class LoginController {
     public String login(
             @RequestParam("username") String username,
             @RequestParam("password") String password,
+            HttpSession session,
             Model model) {
 
         Optional<Customer> customer = customerService.findByUsername(username);
         Optional<Admin> admin = adminService.findByUsername(username);
 
         if (customer.isPresent() && customer.get().getPassword().equals(password)) {
-            WebUtils.getSession().setAttribute("customer", customer);
+            session.setAttribute("customer", customer.get());
             return "home";
         } else if (admin.isPresent() && admin.get().getPassword().equals(password)) {
-            WebUtils.getSession().setAttribute("admin", admin);
+            session.setAttribute("admin", admin.get());
             return "admin";
         } else {
             model.addAttribute("invalidMessage", "Invalid username or password");
@@ -48,9 +48,9 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public String logout(Model model) {
+    public String logout(Model model, HttpSession session) {
         model.addAttribute("logoutMessage", "Logout successfully");
-        WebUtils.getSession().invalidate();
+        session.invalidate();
         return "login";
     }
 }
