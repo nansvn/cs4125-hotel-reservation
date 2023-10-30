@@ -14,19 +14,31 @@ import java.util.List;
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "booking_id")
+    private Long bookingId;
+
+    @Column(name = "checkin_date")
     private Date checkInDate;
+
+    @Column(name = "checkout_date")
     private Date checkOutDate;
+
+    @Column(name = "booking_date")
     private Date bookingDate;
 
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Customer customer;
 
     @OneToOne
     @JoinColumn(name = "room_id")
     private Room room;
 
-    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "booking")
     private Payment payment;
 
     @ManyToMany
@@ -35,29 +47,5 @@ public class Booking {
             joinColumns = @JoinColumn(name = "booking_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id"))
     private List<AdditionalServices> additionalServices;
-
-    public Date getCheckInDate() {
-        return checkInDate;
-    }
-
-    public void setCheckInDate(Date checkInDate) {
-        this.checkInDate = checkInDate;
-    }
-
-    public Date getCheckOutDate() {
-        return checkOutDate;
-    }
-
-    public void setCheckOutDate(Date checkOutDate) {
-        this.checkOutDate = checkOutDate;
-    }
-
-    public Date getBookingDate() {
-        return bookingDate;
-    }
-
-    public void setBookingDate(Date bookingDate) {
-        this.bookingDate = bookingDate;
-    }
 }
 

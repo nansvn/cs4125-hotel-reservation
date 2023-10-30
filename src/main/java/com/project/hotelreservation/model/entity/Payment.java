@@ -13,17 +13,23 @@ import java.util.Date;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "payment_id")
+    private Long paymentId;
 
+    @Column(name = "amount")
     private double amount;
 
+    @Column(name = "date")
     private Date paymentDate;
 
+    @Column(name = "method")
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
+    @Column(name = "status")
     private String status;
 
     @OneToOne
+    @JoinColumn(name = "booking_id")
     private Booking booking;
 }

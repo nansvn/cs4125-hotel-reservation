@@ -9,8 +9,8 @@ import lombok.Data;
 public class AdditionalServices {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "service_id")
+    private Integer serviceId;
 
     @Column(name = "name")
     private String name;
@@ -19,5 +19,5 @@ public class AdditionalServices {
     private String description;
 
     @Column(name = "price")
-    private int price;
+    private double price;
 }

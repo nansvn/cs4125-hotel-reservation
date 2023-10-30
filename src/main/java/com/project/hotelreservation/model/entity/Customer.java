@@ -3,6 +3,9 @@ package com.project.hotelreservation.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -21,4 +24,7 @@ public class Customer extends User {
 
     @Column(name = "reward_points", nullable = false)
     private int rewardPoints;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Booking> bookings = new ArrayList<>();
 }
