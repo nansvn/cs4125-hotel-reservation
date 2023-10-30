@@ -17,67 +17,30 @@
     >
 </head>
 <body>
+<!--icon -->
 <div class="container text-center mt-5">
     <i class="fas fa-hotel fa-5x"></i>
 </div>
-<section class="cover-main" id="room_page">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container">
-                <br>
-                <a class="navbar-brand" href="#home">Blue Roof Hotels</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="src/main/resources/templates/homepage.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/room}">Rooms</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/additionalservices}">Services</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-</section>
 
-<section class="section2">
-    <div class="container my-3">
-        <div class="row pt-4">
-            <table class = "table table-primary table-hover table-responsive-md">
-                <thead class = "table-dark">
-                <tr>
-                    <th>#</th>
-                    <th>Room No.</th>
-                    <th>Maximum capacity</th>
-                    <th>available</th>
-                    <th>Type of Room</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tr th:each="room : ${listRooms}">
-                    <td th:text="${room.roomId}"></td>
-                    <td th:text="${room.roomNumber}"></td>
-                    <td th:text="${room.maxPeople}"></td>
-                    <td th:text="${room.available}"></td>
-                    <td th:text="${room.roomType}"></td>
-                    <td>
-                        <button type="button" class="btn btn-primary"> Book </button>
-                    </td>
-                </tr>
-            </table>
+<!--navbar-->
+<div th:include="navbar :: navbar"></div>
+
+<!--room list-->
+<div class="container">
+    <div th:each="room : ${rooms}" class="cards">
+        <div class="card" style="width: 30rem;">
+            <img th:src="${room.imagePath}" class="card-img-top" alt="room image">
+            <div class="card-body">
+                <h5 class="card-title"
+                    th:text="${#strings.capitalize(room.roomType.toString().toLowerCase())}
+                    + ' '
+                    + ${#strings.capitalize(room.bedSize.toString().toLowerCase())}"></h5>
+                <p class="card-text" th:text="'Price per night: '+${room.price}"></p>
+                <p class="card-text" th:text="${room.description}"></p>
+                <!-- Add more profile attributes as needed -->
+            </div>
         </div>
     </div>
-
-</section>
-
-
+</div>
 </body>
 </html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <title>Homepage</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+          crossorigin="anonymous">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css"
+            integrity="sha512-c93ifPoTvMdEJH/rKIcBx//AL1znq9+4/RmMGafI/vnTFe/dKwnn1uoeszE2zJBQTS1Ck5CqSBE+34ng2PthJg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    >
+</head>
+<body>
+<!--icon -->
+<div class="container text-center mt-5">
+    <i class="fas fa-hotel fa-5x"></i>
+</div>
+
+<!--navbar-->
+<div th:include="navbar :: navbar"></div>
+
+<!-- Main content -->
+
+<div class="container col-md-6 text-center">
+    <h4>Hello, <span th:text="${session.customer.getFirstName()}"></span></h4>
+    <!-- Display other properties of the object as needed -->
+    <form th:action="@{/search}" method="get" class="mt-4">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="checkInDate">Check-in Date</label>
+                <input type="date" class="form-control" id="checkInDate" name="checkInDate" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="checkOutDate">Check-out Date</label>
+                <input type="date" class="form-control" id="checkOutDate" name="checkOutDate" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="people">Number of People</label>
+                <input type="number" class="form-control" id="people" name="people" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+
+<section class="cards-section text-center mt-4">
+    <div class="container">
+        <h5>Our Rooms</h5>
+        <div th:each="room : ${rooms}" class="cards">
+            <div class="card col-md-4">
+                <img th:src="${room.imagePath}" class="card-img-top" alt="room image">
+                <div class="card-body">
+                    <h5 class="card-title"
+                        th:text="${#strings.capitalize(room.roomType.toString().toLowerCase())}
+                    + ' '
+                    + ${#strings.capitalize(room.bedSize.toString().toLowerCase())}"></h5>
+                    <p class="card-text" th:text="'Price per night: '+${room.price}"></p>
+                    <p class="card-text" th:text="${room.description}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

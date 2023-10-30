@@ -4,10 +4,12 @@ package com.project.hotelreservation.controller;
 import com.project.hotelreservation.model.WebCustomer;
 import com.project.hotelreservation.model.entity.Customer;
 import com.project.hotelreservation.service.CustomerService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +35,12 @@ public class RegisterController {
     public String register(
             @Valid
             @ModelAttribute("webCustomer") WebCustomer webCustomer,
+            BindingResult theBindingResult,
+            HttpSession session,
             Model model) {
+        if (theBindingResult.hasErrors()) {
+            return "register";
+        }
         String username = webCustomer.getUsername();
         Optional<Customer> user = customerService.findByUsername(username);
 
@@ -49,7 +56,9 @@ public class RegisterController {
 
         logger.info("Successfully created customer: " + username);
 
-        return "index";
+        session.setAttribute("customer", webCustomer);
+
+        return "login";
     }
 }
 
