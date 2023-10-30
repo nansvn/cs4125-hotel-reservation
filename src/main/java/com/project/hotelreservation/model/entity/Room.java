@@ -19,6 +19,9 @@ public class Room {
     @Column(name = "room_number")
     private String roomNumber;
 
+    @Column(name = "image_path")
+    private String imagePath;
+
     @Column(name = "max_people")
     private Integer maxPeople;
 
@@ -32,6 +35,9 @@ public class Room {
     @Enumerated(EnumType.STRING)
     @Column(name = "bed_size")
     private BedSize bedSize;
+
+    @Column(name = "price")
+    private double price;
 
     @Column(name = "description")
     private String description;

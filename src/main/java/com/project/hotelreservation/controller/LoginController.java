@@ -4,6 +4,8 @@ import com.project.hotelreservation.model.entity.Admin;
 import com.project.hotelreservation.model.entity.Customer;
 import com.project.hotelreservation.service.AdminService;
 import com.project.hotelreservation.service.CustomerService;
+import com.project.hotelreservation.utils.WebUtils;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +23,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String showLoginPage() {
-        return "index";
+        return "login";
     }
 
     @PostMapping("/login")
@@ -34,13 +36,22 @@ public class LoginController {
         Optional<Admin> admin = adminService.findByUsername(username);
 
         if (customer.isPresent() && customer.get().getPassword().equals(password)) {
-            return "homepage";
+            WebUtils.getSession().setAttribute("customer", customer);
+            return "home";
         } else if (admin.isPresent() && admin.get().getPassword().equals(password)) {
+            WebUtils.getSession().setAttribute("admin", admin);
             return "admin";
         } else {
             model.addAttribute("invalidMessage", "Invalid username or password");
-            return "index";
+            return "login";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(Model model) {
+        model.addAttribute("logoutMessage", "Logout successfully");
+        WebUtils.getSession().invalidate();
+        return "login";
     }
 }
 
