@@ -1,5 +1,6 @@
 package com.project.hotelreservation.model.entity;
 
+import com.project.hotelreservation.enums.BedSize;
 import com.project.hotelreservation.enums.RoomType;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -27,6 +28,10 @@ public class Room {
     @Enumerated(EnumType.STRING)
     @Column(name = "room_type")
     private RoomType roomType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "bed_size")
+    private BedSize bedSize;
 
     @Column(name = "description")
     private String description;

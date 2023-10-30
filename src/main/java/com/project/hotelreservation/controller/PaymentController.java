@@ -3,10 +3,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class BillManagementController {
+public class PaymentController {
 
-    @GetMapping("/billmanagement")
+    @GetMapping("/payment")
     public String showBillManagementPage() {
-        return "billmanagement"; // Return the name of your bill management HTML template
+        return "payment"; // Return the name of your bill management HTML template
     }
 }

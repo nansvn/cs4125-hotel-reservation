@@ -1,7 +1,7 @@
 package com.project.hotelreservation.enums;
 
 public enum PaymentMethod {
-    Cash,
-    CreditCard,
-    DebitCard
+    CASH,
+    CREDIT_CARD,
+    DEBIT_CARD,
 }
