@@ -18,6 +18,4 @@ public interface RoomService {
 
     void deleteRoomById(Integer roomId);
 
-
-
 }
