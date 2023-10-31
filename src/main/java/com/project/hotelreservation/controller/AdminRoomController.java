@@ -20,7 +20,7 @@ public class AdminRoomController {
     @GetMapping("/admin")
     public String viewRoomPage(Model model){
         model.addAttribute("listRooms",roomService.getAllRooms());
-    return "admin";
+        return "admin";
     }
 
     //show the room form for creating new room
@@ -32,13 +32,13 @@ public class AdminRoomController {
     //create the room and store in the database
     @PostMapping("/new_room")
     public String addRoom(@RequestParam Integer roomNumber,
-            @RequestParam BigDecimal pricePerNight,
-            @RequestParam Integer maxPeople,
-            @RequestParam boolean available,
-            @RequestParam BedSize bedSize,
-            @RequestParam RoomType roomType,
-            @RequestParam String description,
-            @RequestParam MultipartFile image
+                          @RequestParam BigDecimal pricePerNight,
+                          @RequestParam Integer maxPeople,
+                          @RequestParam boolean available,
+                          @RequestParam BedSize bedSize,
+                          @RequestParam RoomType roomType,
+                          @RequestParam String description,
+                          @RequestParam MultipartFile image
     ) {
         String imagePath = "../src/main/resources/upload/images" + image.getOriginalFilename();
         //create the room and save room to database here
