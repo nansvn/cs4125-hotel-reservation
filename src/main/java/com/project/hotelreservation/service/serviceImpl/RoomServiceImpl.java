@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -44,12 +45,37 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room addRoom(Integer roomNumber, BigDecimal pricePerNight, Integer maxPeople, boolean available, BedSize bedSize, RoomType roomType, String description, String imagePath) {
+    public void addRoom(Integer roomNumber, BigDecimal pricePerNight, Integer maxPeople, boolean available, BedSize bedSize, RoomType roomType, String description, String imagePath) {
         Room room = roomFactory.createRoom(roomNumber, pricePerNight, maxPeople, available, bedSize, roomType, description, imagePath);
         room.setAvailable(true);
         //store the room in the repository
         room = roomRepository.save(room);
-        return room;
     }
+
+    @Override
+    public Room getRoomById(Integer roomId) {
+        Optional<Room> optional = roomRepository.findById(roomId);
+        Room room = null;
+
+        //we get the room from optional
+        if(optional.isPresent()){
+            room = optional.get();
+        }else{
+            throw new RuntimeException("Room not found for id ::" + roomId);
+        }
+        return room;
+
+    }
+
+    @Override
+    public void saveRoom(Room room) {
+        this.roomRepository.save(room);
+    }
+
+    @Override
+    public void deleteRoomById(Integer roomId) {
+        this.roomRepository.deleteById(roomId);
+    }
+
 
 }
