@@ -20,80 +20,80 @@
 <div class="container text-center my-4">
     <i class="fas fa-hotel fa-5x"></i>
 </div>
-    <section class="cover-main " id="room_page" th:fragment="navbar">
-        <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
-            <div class="container">
+<section class="cover-main " id="room_page" th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+        <div class="container">
+            <br>
+            <a class="navbar-brand" th:href="@{/home}"><b>Blue Roof Hotels</b></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/home}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/logout}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</section>
+<div class="container mt-5">
+    <!-- Room Management Section -->
+    <section class="section2">
+        <div class="container my-3">
+            <div class="row pt-4">
+                <h2>Room Management
+                    <a th:href="@{/new_room}">
+                        <button type="button" class="btn btn-primary">
+                            Add Room
+                        </button>
+                    </a>
+                </h2>
                 <br>
-                <a class="navbar-brand" th:href="@{/home}"><b>Blue Roof Hotels</b></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" th:href="@{/home}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" th:href="@{/logout}">Logout</a>
-                        </li>
-                    </ul>
-                </div>
+                <table class="table table-primary table-hover table-responsive-md pt-3">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Room No.</th>
+                        <th>price per night</th>
+                        <th>Maximum capacity</th>
+                        <th>available</th>
+                        <th>Bed Size</th>
+                        <th>Type of Room</th>
+                        <th>description</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tr th:each="room : ${listRooms}">
+                        <td th:text="${room.roomId}"></td>
+                        <td>
+                            <img th:src="@{'../src/main/resources/upload/images/' + ${room.imagePath}}" alt="Room Image" width="100" height="100" />
+                        </td>
+
+                        <td th:text="${room.roomNumber}"></td>
+                        <td th:text="${room.pricePerNight}"></td>
+                        <td th:text="${room.maxPeople}"></td>
+                        <td th:text="${room.available ? 'Yes' : 'No'}"></td>
+                        <td th:text="${room.bedSize}"></td>
+                        <td th:text="${room.roomType}"></td>
+                        <td th:text="${room.description}"></td>
+                        <td>
+                            <a th:href ="@{/showRoomFormForUpdate/{id}(id=${room.roomId})}" class="btn btn-info">Update</a>
+                            <button type="button" class="btn btn-danger"> Delete</button>
+                        </td>
+                    </tr>
+                </table>
             </div>
-        </nav>
+        </div>
+
     </section>
-    <div class="container mt-5">
-        <!-- Room Management Section -->
-        <section class="section2">
-            <div class="container my-3">
-                <div class="row pt-4">
-                    <h2>Room Management
-                        <a th:href="@{/new_room}">
-                            <button type="button" class="btn btn-primary">
-                                Add Room
-                            </button>
-                        </a>
-                    </h2>
-                    <br>
-                    <table class="table table-primary table-hover table-responsive-md pt-3">
-                        <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Image</th>
-                            <th>Room No.</th>
-                            <th>price per night</th>
-                            <th>Maximum capacity</th>
-                            <th>available</th>
-                            <th>Bed Size</th>
-                            <th>Type of Room</th>
-                            <th>description</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tr th:each="room : ${listRooms}">
-                            <td th:text="${room.roomId}"></td>
-                            <td>
-                                <img th:src="@{'../src/main/resources/upload/images/' + ${room.imagePath}}" alt="Room Image" width="100" height="100" />
-                            </td>
 
-                            <td th:text="${room.roomNumber}"></td>
-                            <td th:text="${room.pricePerNight}"></td>
-                            <td th:text="${room.maxPeople}"></td>
-                            <td th:text="${room.available ? 'Yes' : 'No'}"></td>
-                            <td th:text="${room.bedSize}"></td>
-                            <td th:text="${room.roomType}"></td>
-                            <td th:text="${room.description}"></td>
-                            <td>
-                                <button type="button" class="btn btn-info"> Update</button>
-                                <button type="button" class="btn btn-danger"> Delete</button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-        </section>
-
-    </div>
+</div>
 </body>
 </html>
