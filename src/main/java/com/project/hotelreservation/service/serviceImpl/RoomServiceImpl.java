@@ -53,7 +53,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room showRoomById(Integer roomId) {
+    public Room getRoomById(Integer roomId) {
         Optional<Room> optional = roomRepository.findById(roomId);
         Room room = null;
 
@@ -65,7 +65,6 @@ public class RoomServiceImpl implements RoomService {
         }
         return room;
 
-
     }
 
     @Override
@@ -73,6 +72,10 @@ public class RoomServiceImpl implements RoomService {
         this.roomRepository.save(room);
     }
 
+    @Override
+    public void deleteRoomById(Integer roomId) {
+        this.roomRepository.deleteById(roomId);
+    }
 
 
 }
