@@ -13,8 +13,10 @@ public interface RoomService {
     List<Room> searchRoom(Date inDate, Date outDate, int people);
     void addRoom(Integer roomNumber, BigDecimal pricePerNight, Integer maxPeople, boolean available, BedSize bedSize, RoomType roomType, String description, String imagePath);
 
-    Room showRoomById(Integer roomId);
+    Room getRoomById(Integer roomId);
     void saveRoom(Room room);
+
+    void deleteRoomById(Integer roomId);
 
 
 

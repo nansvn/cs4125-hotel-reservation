@@ -85,7 +85,7 @@
                         <td th:text="${room.description}"></td>
                         <td>
                             <a th:href ="@{/showRoomFormForUpdate/{id}(id=${room.roomId})}" class="btn btn-info">Update</a>
-                            <button type="button" class="btn btn-danger"> Delete</button>
+                            <a th:href ="@{/deleteRoom/{id}(id=${room.roomId})}" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 </table>

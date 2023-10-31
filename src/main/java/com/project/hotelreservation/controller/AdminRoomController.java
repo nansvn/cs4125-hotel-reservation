@@ -51,7 +51,7 @@ public class AdminRoomController {
     public String showRoomFormForUpdate(@PathVariable(value = "id") Integer roomId, Model model){
 
         //get room from the service
-        Room room = roomService.showRoomById(roomId);
+        Room room = roomService.getRoomById(roomId);
 
         //set the room as a model attribute to pre-populate the form
         model.addAttribute("room",room);
@@ -68,6 +68,14 @@ public class AdminRoomController {
 
     }
 
+
+    @GetMapping("/deleteRoom/{id}")
+    public String deleteRoom(@PathVariable(value = "id") Integer roomId){
+
+        //call delete employee method
+        this.roomService.deleteRoomById(roomId);
+        return "redirect:/admin";
+    }
 
 
 
