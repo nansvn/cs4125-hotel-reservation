@@ -54,7 +54,6 @@ public class Booking {
 
 
     //private BookingState state;
-    // You can manage the booking state using methods in the Booking class
     public void checkIn() {
         // Handle check-in logic for the booking
         // Transition to CheckedInState if valid
