@@ -32,51 +32,20 @@
         <form id="bookingForm" name="bookingForm" th:action="@{/booking}" th:object="${newBooking}" method="POST">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
-            <div class="form-group">
-
-                <!-- Room Type -->
-                <input type="hidden" th:field="*{bookingId}" />
-                <label>Room Type</label>
-                <select class="form-control prc" th:field="*{room}" id="room_type" required>
-                    <option value="Single Deluxe">Single Deluxe</option>
-                    <option value="Single Standard">Single Standard</option>
-                    <option value="Double Deluxe">Double Deluxe</option>
-                    <option value="Double Standard">Double Standard</option>
-                    <option value="Family Deluxe">Family Deluxe</option>
-                    <option value="Family Standard">Family Standard</option>
-                    <option value="Honeymoon Suite">Honeymoon Suite</option>
-                    <option value="Honeymoon Deluxe Suite">Honeymoon Deluxe Suite</option>
-                </select>
-            </div>
 
             <!-- Check-in Date -->
             <div class="form-group">
                 <label>Check-in Date</label>
-                <input class="form-control prc" id="checkin-date" th:field="*{checkInDate}" type="date" required />
+
             </div>
 
             <!-- Check-out Date -->
             <div class="form-group">
                 <label>Check-out Date</label>
-                <input class="form-control prc" id="checkout-date" th:field="*{checkOutDate}" type="date" required />
+
             </div>
 
-            <!-- Number of Rooms -->
-            <div class="form-group">
-                <label>Number of people</label>
-                <input class="form-control prc" id="room" th:field="*{room}" type="number" placeholder="Room" required />
-            </div>
 
-            <!-- Additional Services (if you have a list of services) -->
-            <div class="form-group">
-                <label>Additional Services</label>
-                <select class="form-control prc" multiple="multiple" th:field="*{additionalServices}" required>
-                    <option value="service1">Service 1</option>
-                    <option value="service2">Service 2</option>
-                    <option value="service3">Service 3</option>
-                    <option value="service4">Service 4</option>
-                </select>
-            </div>
             <!-- Submit form -->
             <button class="sub-btn">Submit</button>
         </form>

@@ -9,9 +9,9 @@ public class BookingController {
 
     @GetMapping("/booking")
     public String showBookingPage(Model model) {
-        // You can add data to the model to populate your Thymeleaf template
+
         model.addAttribute("newBooking", new Booking());
-        return "booking"; // This maps to the "make-order.html" template in the "templates" directory
+        return "booking";
     }
 
     @GetMapping("/viewOrders")

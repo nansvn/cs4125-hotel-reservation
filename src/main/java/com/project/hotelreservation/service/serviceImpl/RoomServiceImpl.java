@@ -36,11 +36,7 @@ public class RoomServiceImpl implements RoomService {
 
         List<Room> availableRooms = roomRepository
                 .findRoomsByAvailableAndMaxPeopleGreaterThanEqual(true, people);
-        availableRooms.removeIf(room ->
-                bookings.stream().anyMatch(
-                        reservation -> reservation.getRoom().equals(room)
-                )
-        );
+
         return availableRooms;
     }
 
