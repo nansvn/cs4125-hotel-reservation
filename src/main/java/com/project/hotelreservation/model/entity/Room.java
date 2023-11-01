@@ -3,11 +3,14 @@ package com.project.hotelreservation.model.entity;
 import com.project.hotelreservation.enums.BedSize;
 import com.project.hotelreservation.enums.RoomType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.List;
+import lombok.NoArgsConstructor;
+import java.math.BigDecimal;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "room")
 public class Room {
@@ -17,10 +20,10 @@ public class Room {
     private Integer roomId;
 
     @Column(name = "room_number")
-    private String roomNumber;
+    private Integer roomNumber;
 
-    @Column(name = "image_path")
-    private String imagePath;
+    @Column(nullable = false, name = "price_per_night")
+    private BigDecimal pricePerNight;
 
     @Column(name = "max_people")
     private Integer maxPeople;
@@ -29,18 +32,18 @@ public class Room {
     private boolean available;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "room_type")
-    private RoomType roomType;
-
-    @Enumerated(EnumType.STRING)
     @Column(name = "bed_size")
     private BedSize bedSize;
 
-    @Column(name = "price")
-    private double price;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "room_type")
+    private RoomType roomType;
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "image_path")
+    private String imagePath;
 
     @OneToOne(mappedBy = "room", cascade = CascadeType.ALL)
     private Booking booking;

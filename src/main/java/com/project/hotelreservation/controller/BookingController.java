@@ -25,6 +25,7 @@ public class BookingController {
     @GetMapping("/booking")
     public String showBookingPage(Model model) {
 
+
         // Create a new Booking and set the initial state
         Booking booking = new Booking();
 
@@ -50,6 +51,7 @@ public class BookingController {
 
         // Redirect to the payment page
         return "redirect:/payment/" + savedBooking.getBookingId();
+
     }
 
     @GetMapping("/viewOrders")

@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Integer> {
     List<Room> findRoomsByAvailableAndMaxPeopleGreaterThanEqual(boolean available, int maxPeople);
+
+    List<Room> findByRoomId(Integer roomId);
 }

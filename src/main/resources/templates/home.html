@@ -61,7 +61,7 @@
                         th:text="${#strings.capitalize(room.roomType.toString().toLowerCase())}
                     + ' '
                     + ${#strings.capitalize(room.bedSize.toString().toLowerCase())}"></h5>
-                    <p class="card-text" th:text="'Price per night: '+${room.price}"></p>
+                    <p class="card-text" th:text="'Price per night: '+${room.pricePerNight}"></p>
                     <p class="card-text" th:text="${room.description}"></p>
                 </div>
             </div>
@@ -70,14 +70,3 @@
 </section>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
