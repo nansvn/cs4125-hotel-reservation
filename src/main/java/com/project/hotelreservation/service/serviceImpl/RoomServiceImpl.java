@@ -77,5 +77,10 @@ public class RoomServiceImpl implements RoomService {
         this.roomRepository.deleteById(roomId);
     }
 
+    @Override
+    public List<Room> searchRoomsByRoomId(Integer roomId) {
+        return roomRepository.findByRoomId(roomId);
+    }
+
 
 }
