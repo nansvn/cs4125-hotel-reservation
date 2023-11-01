@@ -47,27 +47,11 @@
     <section class="section2">
         <div class="container my-3">
             <div class="row pt-4">
-                <h2>Room Management
-                    <a th:href="@{/new_room}">
-                        <button type="button" class="btn btn-primary">
-                            Add Room
-                        </button>
-                    </a>
+                <h2>Show Room By Id (#)
+                    <a th:href="@{/new_room}" class="btn btn-primary">Add Room</a>
+                    <a th:href="@{/admin}" class="btn btn-primary ml-3">Show List of rooms</a>
                 </h2>
-                <!--searching part ->for room id-->
-                <div class="row">
-                    <div class="col-md-6">
-                        <form th:action="@{/rooms/search}" method="get">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Search by Room ID" name="roomId"required>
-                                <div class="input-group-append">
-                                    <button class="btn btn-secondary" type="submit">Search</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
+                <br>
                 <table class="table table-primary table-hover table-responsive-md pt-3">
                     <thead class="table-dark">
                     <tr>
@@ -86,10 +70,8 @@
                     <tr th:each="room : ${listRooms}">
                         <td th:text="${room.roomId}"></td>
                         <td>
-                            <img th:src="@{'../src/main/resources/upload/images/' + ${room.imagePath}}" alt="Room Image"
-                                 width="100" height="100"/>
+                            <img th:src="@{'../src/main/resources/upload/images/' + ${room.imagePath}}" alt="Room Image" width="100" height="100" />
                         </td>
-
                         <td th:text="${room.roomNumber}"></td>
                         <td th:text="${room.pricePerNight}"></td>
                         <td th:text="${room.maxPeople}"></td>
@@ -98,15 +80,13 @@
                         <td th:text="${room.roomType}"></td>
                         <td th:text="${room.description}"></td>
                         <td>
-                            <a th:href="@{/showRoomFormForUpdate/{id}(id=${room.roomId})}"
-                               class="btn btn-info">Update</a>
+                            <a th:href="@{/showRoomFormForUpdate/{id}(id=${room.roomId})}" class="btn btn-info">Update</a>
                             <a th:href="@{/deleteRoom/{id}(id=${room.roomId})}" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
-
     </section>
 
 </div>

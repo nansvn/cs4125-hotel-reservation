@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @AllArgsConstructor
 @Controller
@@ -18,8 +19,8 @@ public class AdminRoomController {
     //Display list of rooms
     private RoomService roomService;
     @GetMapping("/admin")
-    public String viewRoomPage(Model model){
-        model.addAttribute("listRooms",roomService.getAllRooms());
+    public String viewRoomPage(Model model) {
+        model.addAttribute("listRooms", roomService.getAllRooms());
         return "admin";
     }
 
@@ -42,19 +43,19 @@ public class AdminRoomController {
     ) {
         String imagePath = "../src/main/resources/upload/images" + image.getOriginalFilename();
         //create the room and save room to database here
-        roomService.addRoom(roomNumber,pricePerNight, maxPeople, available,bedSize,roomType,description, imagePath);
+        roomService.addRoom(roomNumber, pricePerNight, maxPeople, available, bedSize, roomType, description, imagePath);
         return "redirect:/admin";
     }
 
     //show room form to update the detail of the room
     @GetMapping("/showRoomFormForUpdate/{id}")
-    public String showRoomFormForUpdate(@PathVariable(value = "id") Integer roomId, Model model){
+    public String showRoomFormForUpdate(@PathVariable(value = "id") Integer roomId, Model model) {
 
         //get room from the service
         Room room = roomService.getRoomById(roomId);
 
         //set the room as a model attribute to pre-populate the form
-        model.addAttribute("room",room);
+        model.addAttribute("room", room);
         return "update_room";
 
     }
@@ -70,14 +71,17 @@ public class AdminRoomController {
 
 
     @GetMapping("/deleteRoom/{id}")
-    public String deleteRoom(@PathVariable(value = "id") Integer roomId){
+    public String deleteRoom(@PathVariable(value = "id") Integer roomId) {
 
         //call delete employee method
         this.roomService.deleteRoomById(roomId);
         return "redirect:/admin";
     }
 
-
-
-
+    @GetMapping("/rooms/search")
+    public String searchARoom(@RequestParam Integer roomId, Model model) {
+        List<Room> foundRooms = roomService.searchRoomsByRoomId(roomId);
+        model.addAttribute("listRooms", foundRooms);
+        return "list_rooms";
+    }
 }

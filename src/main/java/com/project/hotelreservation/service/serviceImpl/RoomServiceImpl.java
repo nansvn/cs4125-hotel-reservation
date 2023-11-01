@@ -36,11 +36,18 @@ public class RoomServiceImpl implements RoomService {
 
         List<Room> availableRooms = roomRepository
                 .findRoomsByAvailableAndMaxPeopleGreaterThanEqual(true, people);
+
+
         availableRooms.removeIf(room ->
-                bookings.stream().anyMatch(
-                        reservation -> reservation.getRoom().equals(room)
-                )
+                bookings.stream().anyMatch(reservation -> {
+                    Room reservationRoom = reservation.getRoom();
+                    if (reservationRoom != null) {
+                        return reservationRoom.equals(room);
+                    }
+                    return false; // Handle the case where reservationRoom is null
+                })
         );
+
         return availableRooms;
     }
 
@@ -77,5 +84,11 @@ public class RoomServiceImpl implements RoomService {
         this.roomRepository.deleteById(roomId);
     }
 
+    @Override
+    public List<Room> searchRoomsByRoomId(Integer roomId) {
+        return roomRepository.findByRoomId(roomId);
+    }
+
 
 }
+
