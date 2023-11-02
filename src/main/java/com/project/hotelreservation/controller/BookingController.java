@@ -2,29 +2,24 @@ package com.project.hotelreservation.controller;
 
 import com.project.hotelreservation.model.entity.Booking;
 import com.project.hotelreservation.model.entity.Payment;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import com.project.hotelreservation.repository.BookingRepository;
 import com.project.hotelreservation.repository.PaymentRepository;
 
 
-
 @Controller
+@AllArgsConstructor
 public class BookingController {
-
-    @Autowired
     private BookingRepository bookingRepository;
-
-    @Autowired
     private PaymentRepository paymentRepository;
 
     @GetMapping("/booking")
     public String showBookingPage(Model model) {
-
 
         // Create a new Booking and set the initial state
         Booking booking = new Booking();
@@ -35,11 +30,11 @@ public class BookingController {
         booking.cancel(); // This will transition the state to CancelledState
 
         model.addAttribute("newBooking", new Booking());
-        return "booking";
+        return "customer/booking";
     }
 
     @PostMapping("/booking")
-    public String processBooking(@ModelAttribute("newBooking") Booking newBooking)  {
+    public String processBooking(@ModelAttribute("newBooking") Booking newBooking) {
         Booking savedBooking = bookingRepository.save(newBooking);
 
         // Create a Payment object
@@ -56,7 +51,7 @@ public class BookingController {
 
     @GetMapping("/viewOrders")
     public String showOrders(Model model) {
-        return "orders";
+        return "customer/orders";
     }
 }
 

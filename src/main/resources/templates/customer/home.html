@@ -23,10 +23,9 @@
 </div>
 
 <!--navbar-->
-<div th:include="navbar :: navbar"></div>
+<div th:include="fragments/navbar :: navbar"></div>
 
 <!-- Main content -->
-
 <div class="container col-md-6 text-center">
     <h4>Hello, <span th:text="${session.customer.getFirstName()}"></span></h4>
     <!-- Display other properties of the object as needed -->
@@ -47,7 +46,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
-
 </div>
 
 <section class="cards-section text-center mt-4">

@@ -4,7 +4,6 @@ import com.project.hotelreservation.model.entity.Room;
 import com.project.hotelreservation.service.RoomService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +29,6 @@ public class CustomerRoomController {
         session.setAttribute("checkInDate", checkInDate);
         session.setAttribute("people", checkOutDate);
         session.setAttribute("people", people);
-        return "room";
+        return "customer/room";
     }
 }

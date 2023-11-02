@@ -13,25 +13,26 @@ import org.springframework.web.multipart.MultipartFile;
 import java.math.BigDecimal;
 import java.util.List;
 
-@AllArgsConstructor
 @Controller
+@AllArgsConstructor
 public class AdminRoomController {
-    //Display list of rooms
     private RoomService roomService;
+
+    // display the list of rooms
     @GetMapping("/admin")
     public String viewRoomPage(Model model) {
         model.addAttribute("listRooms", roomService.getAllRooms());
-        return "admin";
+        return "admin/admin";
     }
 
-    //show the room form for creating new room
-    @GetMapping("/new_room")
+    // show the room form for creating new room
+    @GetMapping("/new-room")
     public String showAddRoomForm() {
-        return "new_room";
+        return "admin/new-room";
     }
 
-    //create the room and store in the database
-    @PostMapping("/new_room")
+    // create the new room and store it in the database
+    @PostMapping("/new-room")
     public String addRoom(@RequestParam Integer roomNumber,
                           @RequestParam BigDecimal pricePerNight,
                           @RequestParam Integer maxPeople,
@@ -42,38 +43,34 @@ public class AdminRoomController {
                           @RequestParam MultipartFile image
     ) {
         String imagePath = "../src/main/resources/upload/images" + image.getOriginalFilename();
-        //create the room and save room to database here
+        // create the room and save room to database here
         roomService.addRoom(roomNumber, pricePerNight, maxPeople, available, bedSize, roomType, description, imagePath);
         return "redirect:/admin";
     }
 
-    //show room form to update the detail of the room
+    // show room form to update the detail of the room
     @GetMapping("/showRoomFormForUpdate/{id}")
     public String showRoomFormForUpdate(@PathVariable(value = "id") Integer roomId, Model model) {
 
-        //get room from the service
+        // get room from the service
         Room room = roomService.getRoomById(roomId);
 
-        //set the room as a model attribute to pre-populate the form
+        // set the room as a model attribute to pre-populate the form
         model.addAttribute("room", room);
-        return "update_room";
+        return "admin/update-room";
 
     }
-
 
     @PostMapping("/update_room")
     public String saveRoom(@ModelAttribute("room") Room room) {
-        //save employee to database
+        // save update room to database
         roomService.saveRoom(room);
         return "redirect:/admin";
-
     }
-
 
     @GetMapping("/deleteRoom/{id}")
     public String deleteRoom(@PathVariable(value = "id") Integer roomId) {
-
-        //call delete employee method
+        // call delete room method
         this.roomService.deleteRoomById(roomId);
         return "redirect:/admin";
     }
@@ -82,6 +79,6 @@ public class AdminRoomController {
     public String searchARoom(@RequestParam Integer roomId, Model model) {
         List<Room> foundRooms = roomService.searchRoomsByRoomId(roomId);
         model.addAttribute("listRooms", foundRooms);
-        return "list_rooms";
+        return "admin/list-rooms";
     }
 }
