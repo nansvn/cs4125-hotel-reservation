@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class HomeController {
     private RoomService roomService;
+
     @GetMapping("/")
     public String showLogin() {
         return "login";
@@ -21,12 +22,18 @@ public class HomeController {
 
     @GetMapping("/home")
     public String showHome(Model model, HttpSession session) {
-        if (session.getAttribute("customer") == null) {
-            model.addAttribute("accessDeniedMessage", "Please log in first");
-            return "login";
+        if (session.getAttribute("customer") != null) {
+            List<Room> rooms = roomService.getAllRooms();
+            model.addAttribute("rooms", rooms);
+            return "customer/home";
         }
-        List<Room> rooms = roomService.getAllRooms();
-        model.addAttribute("rooms",rooms);
-        return "home";
+
+        if (session.getAttribute("admin") != null) {
+            model.addAttribute("listRooms", roomService.getAllRooms());
+            return "admin/admin";
+        }
+
+        model.addAttribute("accessDeniedMessage", "Please log in first");
+        return "login";
     }
 }

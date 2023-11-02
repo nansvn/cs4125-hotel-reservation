@@ -40,7 +40,7 @@ public class LoginController {
             return "redirect:/home";
         } else if (admin.isPresent() && admin.get().getPassword().equals(password)) {
             session.setAttribute("admin", admin.get());
-            return "redirect:/admin";
+            return "redirect:/home";
         } else {
             model.addAttribute("invalidMessage", "Invalid username or password");
             return "login";
