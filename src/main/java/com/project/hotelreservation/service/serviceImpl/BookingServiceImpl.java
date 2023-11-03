@@ -10,8 +10,8 @@ import com.project.hotelreservation.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -29,9 +29,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setCheckInDate(checkInDate);
         booking.setCheckOutDate(checkOutDate);
         booking.setPayment(null);
-        LocalDate localDate = LocalDate.now();
-        Date currentDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        booking.setBookingDate(currentDate);
+        booking.setBookingDate(Timestamp.from(Instant.now()));
         booking.setStatus(BookingStatus.PENDING);
         bookingRepository.save(booking);
     }

@@ -48,6 +48,8 @@ public class CustomerRoomController {
         LocalDateTime updatedCheckInDate = localCheckInDate.plusHours(12); // add 12 hours
         // convert back
         Date newCheckInDate = Date.from(updatedCheckInDate.atZone(ZoneId.systemDefault()).toInstant());
+        // update session
+        session.setAttribute("checkInDate", newCheckInDate);
 
         Date checkOutDate = (Date) session.getAttribute("checkOutDate");
         // convert to LocalDateTime item
@@ -55,6 +57,8 @@ public class CustomerRoomController {
         LocalDateTime updatedCheckOutDate = localCheckOutDate.plusHours(9); // add 12 hours
         // convert back
         Date newCheckOutDate = Date.from(updatedCheckOutDate.atZone(ZoneId.systemDefault()).toInstant());
+        // update session
+        session.setAttribute("checkOutDate", newCheckOutDate);
 
         model.addAttribute("room", room);
         model.addAttribute("checkInDate", newCheckInDate);
