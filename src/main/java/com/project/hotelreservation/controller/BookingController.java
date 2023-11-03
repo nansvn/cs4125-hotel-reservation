@@ -1,57 +1,86 @@
 package com.project.hotelreservation.controller;
 
-import com.project.hotelreservation.enums.BookingStatus;
+import com.project.hotelreservation.model.entity.AdditionalServices;
 import com.project.hotelreservation.model.entity.Booking;
-import com.project.hotelreservation.repository.RoomRepository;
+import com.project.hotelreservation.model.entity.Customer;
+import com.project.hotelreservation.model.entity.Room;
+import com.project.hotelreservation.service.AdditionalServicesService;
+import com.project.hotelreservation.service.BookingService;
+import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import com.project.hotelreservation.repository.BookingRepository;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Date;
+import java.util.List;
+
 
 @Controller
+@AllArgsConstructor
 public class BookingController {
-
-    @Autowired
-    private BookingRepository bookingRepository;
-    @Autowired
-    private RoomRepository roomRepository;
+    private final BookingService bookingService;
+    private final AdditionalServicesService additionalServicesService;
 
     @GetMapping("/booking")
     public String showBookingPage(Model model) {
+        // Create a new Booking and set the initial state
+        Booking booking = new Booking();
         model.addAttribute("newBooking", new Booking());
-        // Other model data setup, if needed
-        return "booking";
-    }
-    @PostMapping("/booking")
-    public String processBooking(@ModelAttribute("newBooking") Booking newBooking)  {
-
-        Booking savedBooking = bookingRepository.save(newBooking);
-
-        // Redirect to the booking confirmation page
-        return "redirect:/booking_confirmation/" + savedBooking.getBookingId();
+        return "customer/booking";
     }
 
-
-    @GetMapping("/viewOrders")
-    public String showOrders(Model model) {
-        return "orders";
-    }
-    @GetMapping("/booking_confirmation/{bookingId}")
-    public String showBookingConfirmationPage(@PathVariable Long bookingId, Model model) {
-        // Retrieve booking details based on the bookingId
-        Booking booking = bookingRepository.findById(bookingId).orElse(null);
-        booking.setStatus(BookingStatus.COMPLETED);
-        // Pass booking details to the confirmation page
-        model.addAttribute("booking", booking);
-
-        return "booking_confirmation";
+    // proceed to select the additional services
+    @PostMapping("/proceed-booking")
+    public String processBooking() {
+        return "redirect:/additional-services";
     }
 
-    // ... other methods ...
+    // collect selected services and
+    // proceed to the final confirmation page
+    @PostMapping("/confirm-booking")
+    public String confirmBooking(@RequestParam(required = false) List<Integer> serviceIds,
+                                 Model model,
+                                 HttpSession session) {
+        List<AdditionalServices> selectedServices = additionalServicesService.getServicesByIds(serviceIds);
+        model.addAttribute("selectedServices", selectedServices);
+        session.setAttribute("selectedServices", selectedServices);
+        return "customer/confirmation";
+    }
+
+    // handle the actual save booking actions
+    @PostMapping("/save-booking")
+    public String saveBooking(HttpSession session) {
+        Room room = (Room) session.getAttribute("room");
+        Customer customer = (Customer) session.getAttribute("customer");
+        @SuppressWarnings("unchecked")
+        List<AdditionalServices> selectedServices = (List<AdditionalServices>) session.getAttribute("selectedServices");
+        Date checkInDate = (Date) session.getAttribute("checkInDate");
+        Date checkOutDate = (Date) session.getAttribute("checkOutDate");
+        bookingService.save(room, selectedServices, customer, checkInDate, checkOutDate);
+        // proceed to the payment page
+        return "redirect:/payment";
+    }
+
+
+    // view history orders
+    // unfinished
+    @GetMapping("/view-orders")
+    public String showOrders(HttpSession session, Model model) {
+        Customer customer = (Customer) session.getAttribute("customer");
+        model.addAttribute("orders",bookingService.getOrdersByCustomer(customer));
+        return "customer/orders";
+    }
+
+    // cancel order
+    // unfinished
+    @GetMapping("/cancel-order")
+    public String cancelOrders(@RequestParam Long bookingId) {
+        bookingService.cancelOrder(bookingId);
+        return "redirect:/view-orders";
+    }
 }
 
 

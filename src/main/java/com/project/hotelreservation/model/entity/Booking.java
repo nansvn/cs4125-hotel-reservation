@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class Booking {
     private Date checkOutDate;
 
     @Column(name = "booking_date")
-    private Date bookingDate;
+    private Timestamp bookingDate;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

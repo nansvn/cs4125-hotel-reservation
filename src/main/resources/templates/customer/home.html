@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-
 <head>
     <title>Homepage</title>
     <meta charset="utf-8">
@@ -18,15 +17,12 @@
 </head>
 <body>
 <!--icon -->
-<div class="container text-center mt-5">
-    <i class="fas fa-hotel fa-5x"></i>
-</div>
+<div th:insert="~{fragments/icon :: icon}"></div>
 
 <!--navbar-->
-<div th:include="navbar :: navbar"></div>
+<div th:insert="~{fragments/navbar :: navbar}"></div>
 
 <!-- Main content -->
-
 <div class="container col-md-6 text-center">
     <h4>Hello, <span th:text="${session.customer.getFirstName()}"></span></h4>
     <!-- Display other properties of the object as needed -->
@@ -47,26 +43,28 @@
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
-
 </div>
 
 <section class="cards-section text-center mt-4">
     <div class="container">
         <h5>Our Rooms</h5>
-        <div th:each="room : ${rooms}" class="cards">
-            <div class="card col-md-4">
-                <img th:src="${room.imagePath}" class="card-img-top" alt="room image">
-                <div class="card-body">
-                    <h5 class="card-title"
-                        th:text="${#strings.capitalize(room.roomType.toString().toLowerCase())}
-                    + ' '
-                    + ${#strings.capitalize(room.bedSize.toString().toLowerCase())}"></h5>
-                    <p class="card-text" th:text="'Price per night: '+${room.pricePerNight}"></p>
-                    <p class="card-text" th:text="${room.description}"></p>
+        <div class="row">
+            <div th:each="room : ${rooms}" class="col-md-4 mb-4">
+                <!-- Individual card -->
+                <div class="card">
+                    <img th:src="${room.imagePath}" class="card-img-top" alt="Room image">
+                    <div class="card-body">
+                        <h5 class="card-title"
+                            th:text="${#strings.capitalize(room.roomType.toString().toLowerCase())} + ' ' + ${#strings.capitalize(room.bedSize.toString().toLowerCase())}"></h5>
+                        <p class="card-text" th:text="'Price per night: '+${room.pricePerNight}"></p>
+                        <p class="card-text" th:text="${room.description}"></p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+
 </body>
 </html>

@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AdditionalServicesController {
     private AdditionalServicesService additionalServicesService;
 
-    @GetMapping("/additionalservices")
+    @GetMapping("/additional-services")
     public String viewAdditionalServicesPage(Model model) {
         model.addAttribute("additionalServices", additionalServicesService.getAllAdditionalServices());
-        return "additionalservices"; // Replace with the name of your HTML template file
+        return "customer/additional-services";
     }
 
 }
