@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-
 <head>
     <title>Register</title>
     <meta charset="utf-8">
@@ -15,7 +14,6 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
-
 </head>
 
 <body>
@@ -83,7 +81,7 @@
                                  style="margin-bottom: 25px" class="text-danger">
                                 <ul>
                                     <li th:each="err : ${#fields.errors('username')}"
-                                        th:text="'username ' + ${err}"/>
+                                        th:text="'Username ' + ${err}"/>
                                 </ul>
                             </div>
 

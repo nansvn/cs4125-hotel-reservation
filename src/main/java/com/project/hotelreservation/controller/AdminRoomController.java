@@ -61,14 +61,14 @@ public class AdminRoomController {
 
     }
 
-    @PostMapping("/update_room")
+    @PostMapping("/update-room")
     public String saveRoom(@ModelAttribute("room") Room room) {
         // save update room to database
         roomService.saveRoom(room);
         return "redirect:/admin";
     }
 
-    @GetMapping("/deleteRoom/{id}")
+    @GetMapping("/delete-room/{id}")
     public String deleteRoom(@PathVariable(value = "id") Integer roomId) {
         // call delete room method
         this.roomService.deleteRoomById(roomId);

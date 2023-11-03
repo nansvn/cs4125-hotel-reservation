@@ -17,34 +17,12 @@
 </head>
 
 <body>
-<div class="container text-center my-4">
-    <i class="fas fa-hotel fa-5x"></i>
-</div>
-<section class="cover-main" id="home">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
-            <div class="container">
-                <h2>
-                    <a class="navbar-brand " th:href="@{/templates/admin}"><b>Blue Roof Hotels</b></a>
-                </h2>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" th:href="@{/templates/admin}">Admin page</a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-white" th:href="@{/index}">Logout</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-</section>
+<!--icon -->
+<div th:insert="~{fragments/icon :: icon}"></div>
+
+<!-- navbar -->
+<div th:insert ="~{fragments/admin-navbar :: admin-navbar}"></div>
+
 <div class="container mt-5">
     <!-- Room Management Section -->
     <section class="section2">
@@ -54,7 +32,7 @@
                 <br>
                 <!-- add room form -->
                 <div class="container my-3">
-                    <form th:action="@{/new_room}" method="post" enctype="multipart/form-data">
+                    <form th:action="@{/new-room}" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="roomNumber">Room Number</label>
                             <input type="number" id="roomNumber" name="roomNumber" placeholder="Room Number" class="form-control" required min="0">

@@ -18,29 +18,35 @@
 </head>
 <body>
 <!--icon -->
-<div class="container text-center mt-5">
-    <i class="fas fa-hotel fa-5x"></i>
-</div>
+<div th:insert="~{fragments/icon :: icon}"></div>
 
 <!--navbar-->
-<div th:include="fragments/navbar :: navbar"></div>
+<div th:insert="~{fragments/navbar :: navbar}"></div>
 
-<!--room list-->
-<div class="container">
-    <div th:each="room : ${rooms}" class="cards">
-        <div class="card" style="width: 30rem;">
-            <img th:src="${room.imagePath}" class="card-img-top" alt="room image">
-            <div class="card-body">
-                <h5 class="card-title"
-                    th:text="${#strings.capitalize(room.roomType.toString().toLowerCase())}
-                    + ' '
-                    + ${#strings.capitalize(room.bedSize.toString().toLowerCase())}"></h5>
-                <p class="card-text" th:text="'Price per night: '+${room.pricePerNight}"></p>
-                <p class="card-text" th:text="${room.description}"></p>
-                <!-- Add more profile attributes as needed -->
+<!-- main content-->
+<section class="cards-section text-center mt-4">
+    <div class="container">
+        <!-- Start a new row for the cards -->
+        <div class="row">
+            <div th:each="room : ${rooms}" class="col-md-4 mb-4">
+                <!-- Individual card -->
+                <div class="card">
+                    <img th:src="${room.imagePath}" th:alt="${room.roomType}" class="card-img-top" alt="room image">
+                    <div class="card-body">
+                        <h5 class="card-title"
+                            th:text="${#strings.capitalize(room.roomType.toString().toLowerCase())}
+                            + ' '
+                            + ${#strings.capitalize(room.bedSize.toString().toLowerCase())}">
+                        </h5>
+                        <p class="card-text" th:text="'Price per night: '+${room.pricePerNight}"></p>
+                        <p class="card-text" th:text="${room.description}"></p>
+                        <a th:href="@{'/book/' + ${room.getRoomId()}}" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
 </body>
 </html>
