@@ -17,15 +17,21 @@
 </head>
 
 <body>
+<!--icon -->
+<div th:insert="~{fragments/icon :: icon}"></div>
+
+<!-- navbar -->
+<div th:insert ="~{fragments/admin-navbar :: admin-navbar}"></div>
+
+<!-- update room form -->
 <div class="container mt-5">
     <section class="section2">
         <div class="container my-3">
             <div class="row pt-4">
                 <h2>Update Room Information</h2>
                 <br>
-                <!-- update room form -->
                 <div class="container my-3">
-                    <form th:action="@{/update_room}" method="post" enctype="multipart/form-data">
+                    <form th:action="@{/update-room}" method="post" enctype="multipart/form-data">
 
                         <div class="form-group">
                             <label for="roomNumber">Room Number</label>

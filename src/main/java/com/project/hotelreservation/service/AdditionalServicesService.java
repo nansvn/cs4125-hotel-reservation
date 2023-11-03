@@ -5,4 +5,6 @@ import java.util.List;
 
 public interface AdditionalServicesService {
     List<AdditionalServices> getAllAdditionalServices();
+    List<AdditionalServices> getServicesByIds(List<Integer> ids);
+
 }

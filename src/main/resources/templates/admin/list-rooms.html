@@ -17,39 +17,20 @@
 </head>
 
 <body>
-<div class="container text-center my-4">
-    <i class="fas fa-hotel fa-5x"></i>
-</div>
-<section class="cover-main " id="room_page" th:fragment="navbar">
-    <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
-        <div class="container">
-            <br>
-            <a class="navbar-brand" th:href="@{/home}"><b>Blue Roof Hotels</b></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" th:href="@{/home}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" th:href="@{/logout}">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</section>
+<!--icon -->
+<div th:insert="~{fragments/icon :: icon}"></div>
+
+<!-- navbar -->
+<div th:insert ="~{fragments/admin-navbar :: admin-navbar}"></div>
+
+<!-- Room Management Section -->
 <div class="container mt-5">
-    <!-- Room Management Section -->
     <section class="section2">
         <div class="container my-3">
             <div class="row pt-4">
                 <h2>Show Room By Id (#)
-                    <a th:href="@{/new_room}" class="btn btn-primary">Add Room</a>
-                    <a th:href="@{/admin}" class="btn btn-primary ml-3">Show List of rooms</a>
+                    <a th:href="@{/new-room}" class="btn btn-primary">Add Room</a>
+                    <a th:href="@{/admin}" class="btn btn-primary ml-3">Show Room List</a>
                 </h2>
                 <br>
                 <table class="table table-primary table-hover table-responsive-md pt-3">
@@ -81,7 +62,7 @@
                         <td th:text="${room.description}"></td>
                         <td>
                             <a th:href="@{/showRoomFormForUpdate/{id}(id=${room.roomId})}" class="btn btn-info">Update</a>
-                            <a th:href="@{/deleteRoom/{id}(id=${room.roomId})}" class="btn btn-danger">Delete</a>
+                            <a th:href="@{/delete-room/{id}(id=${room.roomId})}" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 </table>
