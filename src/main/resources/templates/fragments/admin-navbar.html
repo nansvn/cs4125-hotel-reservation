@@ -17,11 +17,11 @@
 </head>
 
 <body>
-<section class="cover-main" id="room_page" th:fragment="navbar">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<section class="cover-main " id="room_page" th:fragment="admin-navbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
         <div class="container">
             <br>
-            <a class="navbar-brand" th:href="@{/home}">Blue Roof Hotels</a>
+            <a class="navbar-brand" th:href="@{/home}"><b>Blue Roof Hotels</b></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -29,13 +29,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/home}">Home</a>
+                        <a class="nav-link text-white" th:href="@{/home}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/viewOrders}">MyOrders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/logout}">Logout</a>
+                        <a class="nav-link text-white" th:href="@{/logout}">Logout</a>
                     </li>
                 </ul>
             </div>
