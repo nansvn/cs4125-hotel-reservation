@@ -1,26 +1,31 @@
 package com.project.hotelreservation.controller;
 
+import com.project.hotelreservation.model.entity.AdditionalServices;
 import com.project.hotelreservation.model.entity.Booking;
-import com.project.hotelreservation.model.entity.Payment;
+import com.project.hotelreservation.model.entity.Customer;
+import com.project.hotelreservation.model.entity.Room;
+import com.project.hotelreservation.service.AdditionalServicesService;
+import com.project.hotelreservation.service.BookingService;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import com.project.hotelreservation.repository.BookingRepository;
-import com.project.hotelreservation.repository.PaymentRepository;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Date;
+import java.util.List;
 
 
 @Controller
 @AllArgsConstructor
 public class BookingController {
-    private BookingRepository bookingRepository;
-    private PaymentRepository paymentRepository;
+    private final BookingService bookingService;
+    private final AdditionalServicesService additionalServicesService;
 
     @GetMapping("/booking")
     public String showBookingPage(Model model) {
-
         // Create a new Booking and set the initial state
         Booking booking = new Booking();
 
@@ -33,20 +38,33 @@ public class BookingController {
         return "customer/booking";
     }
 
-    @PostMapping("/booking")
-    public String processBooking(@ModelAttribute("newBooking") Booking newBooking) {
-        Booking savedBooking = bookingRepository.save(newBooking);
+    @PostMapping("/proceed-booking")
+    public String processBooking() {
+        // proceed to the additional services page
+        return "redirect:/additional-services";
+    }
 
-        // Create a Payment object
-        Payment payment = new Payment();
-        payment.setAmount(100.0); // Set the payment amount as needed
-        payment.setBooking(savedBooking); // Associate the payment with the booking
+    @PostMapping("/confirm-booking")
+    public String confirmBooking(@RequestParam(required = false) List<Integer> serviceIds,
+                                 Model model,
+                                 HttpSession session) {
+        List<AdditionalServices> selectedServices = additionalServicesService.getServicesByIds(serviceIds);
+        model.addAttribute("selectedServices",selectedServices);
+        session.setAttribute("selectedServices",selectedServices);
+        return "customer/confirmation";
+    }
 
-        paymentRepository.save(payment);
-
-        // Redirect to the payment page
-        return "redirect:/payment/" + savedBooking.getBookingId();
-
+    @PostMapping("/save-booking")
+    public String saveBooking(HttpSession session) {
+        Room room = (Room) session.getAttribute("room");
+        Customer customer = (Customer) session.getAttribute("customer");
+        @SuppressWarnings("unchecked")
+        List<AdditionalServices> selectedServices = (List<AdditionalServices>) session.getAttribute("selectedServices");
+        Date checkInDate = (Date) session.getAttribute("checkInDate");
+        Date checkOutDate = (Date) session.getAttribute("checkOutDate");
+        bookingService.save(room, selectedServices, customer, checkInDate, checkOutDate);
+        // proceed to the payment page
+        return "redirect:/payment";
     }
 
     @GetMapping("/viewOrders")

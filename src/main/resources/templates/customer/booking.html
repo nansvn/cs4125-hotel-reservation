@@ -24,13 +24,13 @@
 <!--navbar-->
 <div th:insert="~{fragments/navbar :: navbar}"></div>
 
-<!-- Hotel Booking Section -->
+<!-- room booking section -->
 <div class="container">
     <h2 class="sub-title text-center">Book Your Room Now</h2>
     <section class="card booking-form col-6" style="width:60%;margin: auto">
         <div class="card-header">Booking Form</div>
         <div class="card-body">
-            <form action="#" method="post">
+            <form th:action="@{/proceed-booking}" method="post">
                 <div class="card-text">
                     <p>Room Type: <span th:text="${room.getRoomType()} + ' ' + ${room.getBedSize()}"></span></p>
                     <p>Description: <span th:text="${room.getDescription()}"></span></p>
@@ -43,63 +43,13 @@
                     <input type="hidden" id="checkInDate" th:value="${checkInDate}"/>
                     <input type="hidden" id="checkOutDate" th:value="${checkOutDate}"/>
                     <p>Number of People: <span th:text="${people}"></span></p>
-
-                    <!-- additional services section -->
-                    <fieldset>
-                        <p>Additional Services</p>
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" name="additionalServices" value="breakfast" data-cost="15">
-                                Breakfast (€15)
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" name="additionalServices" value="parking" data-cost="10">
-                                <!--th:checked="${services.contains('parking')}"-->
-                                Parking (€10)
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" name="additionalServices" value="spa" data-cost="25">
-                                Gym Access (€25)
-                            </label>
-                        </div>
-                    </fieldset>
-
-                    <!-- cost calculation section -->
-                    <div class="total-cost my-3">
-                        Total Cost: €<span id="totalCost">0</span>
-                    </div>
-
                 </div>
-                <button type="submit" class="btn btn-primary">Confirm</button>
+                <button type="submit" class="btn btn-primary">Proceed</button>
                 <a class="btn btn-secondary" th:href="@{/home}">Cancel</a>
             </form>
         </div>
     </section>
 </div>
-<script th:inline="javascript">
-    // the function to update the total cost
-    // not finished yet
-    function updateTotalCost() {
-        const roomPrice = [[${room.getPricePerNight()}]];
-        const services = document.querySelectorAll('input[name="additionalServices"]:checked');
-        let totalCost = roomPrice;
-        services.forEach(function (service) {
-            totalCost += parseInt(service.getAttribute('data-cost'), 10);
-        });
-        document.getElementById('totalCost').textContent = totalCost;
-    }
 
-    // event listener for changes in the additional services checkboxes
-    document.querySelectorAll('input[name="additionalServices"]').forEach(function (checkbox) {
-        checkbox.addEventListener('change', updateTotalCost);
-    });
-
-    // initial calculation on page load
-    document.addEventListener('DOMContentLoaded', updateTotalCost);
-</script>
 </body>
 </html>
