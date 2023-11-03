@@ -39,44 +39,33 @@ public class BookingController {
     }
 
     // proceed to select the additional services
-    @PostMapping("/proceed-booking")
-    public String processBooking() {
-        return "redirect:/additional-services";
+    @GetMapping("/proceed-booking")
+    public String processBooking(Model model) {
+        model.addAttribute("additionalServices", additionalServicesService.getAllAdditionalServices());
+        return "customer/additional-services";
     }
 
-    // collect selected services and
-    // proceed to the final confirmation page
+
+    // create the order with collected additional services info
+    // display the order overview
     @PostMapping("/confirm-booking")
     public String confirmBooking(@RequestParam(required = false) List<Integer> serviceIds,
-                                 Model model,
                                  HttpSession session) {
         List<AdditionalServices> selectedServices = additionalServicesService.getServicesByIds(serviceIds);
-        model.addAttribute("selectedServices", selectedServices);
-        session.setAttribute("selectedServices", selectedServices);
-        return "customer/confirmation";
-    }
-
-    // handle the actual save booking actions
-    @PostMapping("/save-booking")
-    public String saveBooking(HttpSession session) {
         Room room = (Room) session.getAttribute("room");
         Customer customer = (Customer) session.getAttribute("customer");
-        @SuppressWarnings("unchecked")
-        List<AdditionalServices> selectedServices = (List<AdditionalServices>) session.getAttribute("selectedServices");
         Date checkInDate = (Date) session.getAttribute("checkInDate");
         Date checkOutDate = (Date) session.getAttribute("checkOutDate");
         bookingService.save(room, selectedServices, customer, checkInDate, checkOutDate);
-        // proceed to the payment page
-        return "redirect:/payment";
+        return "customer/booking-confirmation";
     }
-
 
     // view history orders
     // unfinished
     @GetMapping("/view-orders")
     public String showOrders(HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("customer");
-        model.addAttribute("orders",bookingService.getOrdersByCustomer(customer));
+        model.addAttribute("orders", bookingService.getOrdersByCustomer(customer));
         return "customer/orders";
     }
 
