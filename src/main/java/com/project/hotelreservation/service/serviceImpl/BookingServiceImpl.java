@@ -35,4 +35,15 @@ public class BookingServiceImpl implements BookingService {
         booking.setStatus(BookingStatus.PENDING);
         bookingRepository.save(booking);
     }
+
+    @Override
+    public List<Booking> getOrdersByCustomer(Customer customer) {
+        return bookingRepository.findBookingByCustomer(customer);
+    }
+
+    @Override
+    public void cancelOrder(Long bookingId) {
+        bookingRepository.deleteBookingByBookingId(bookingId);
+    }
+
 }

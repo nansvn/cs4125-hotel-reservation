@@ -38,22 +38,25 @@ public class BookingController {
         return "customer/booking";
     }
 
+    // proceed to select the additional services
     @PostMapping("/proceed-booking")
     public String processBooking() {
-        // proceed to the additional services page
         return "redirect:/additional-services";
     }
 
+    // collect selected services and
+    // proceed to the final confirmation page
     @PostMapping("/confirm-booking")
     public String confirmBooking(@RequestParam(required = false) List<Integer> serviceIds,
                                  Model model,
                                  HttpSession session) {
         List<AdditionalServices> selectedServices = additionalServicesService.getServicesByIds(serviceIds);
-        model.addAttribute("selectedServices",selectedServices);
-        session.setAttribute("selectedServices",selectedServices);
+        model.addAttribute("selectedServices", selectedServices);
+        session.setAttribute("selectedServices", selectedServices);
         return "customer/confirmation";
     }
 
+    // handle the actual save booking actions
     @PostMapping("/save-booking")
     public String saveBooking(HttpSession session) {
         Room room = (Room) session.getAttribute("room");
@@ -67,9 +70,22 @@ public class BookingController {
         return "redirect:/payment";
     }
 
-    @GetMapping("/viewOrders")
-    public String showOrders(Model model) {
+
+    // view history orders
+    // unfinished
+    @GetMapping("/view-orders")
+    public String showOrders(HttpSession session, Model model) {
+        Customer customer = (Customer) session.getAttribute("customer");
+        model.addAttribute("orders",bookingService.getOrdersByCustomer(customer));
         return "customer/orders";
+    }
+
+    // cancel order
+    // unfinished
+    @GetMapping("/cancel-order")
+    public String cancelOrders(@RequestParam Long bookingId) {
+        bookingService.cancelOrder(bookingId);
+        return "redirect:/view-orders";
     }
 }
 
