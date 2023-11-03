@@ -18,52 +18,38 @@
 </head>
 
 <body>
-<div class="container text-center mt-5">
-    <i class="fas fa-hotel fa-5x"></i>
-</div>
-<!-- Hotel Booking Section -->
+<!--icon -->
+<div th:insert="~{fragments/icon :: icon}"></div>
+
+<!--navbar-->
+<div th:insert="~{fragments/navbar :: navbar}"></div>
+
+<!-- room booking section -->
 <div class="container">
-    <h2 class="sub-title" id="book">Hotel Booking</h2>
-    <div class="hotel_reserve_box card">
-        <h3>Booking Form</h3>
-        <br>
-
-        <!-- Booking form -->
-        <form id="bookingForm" name="bookingForm" th:action="@{/booking}" th:object="${newBooking}" method="POST">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-            <!-- Check-in Date -->
-            <div class="form-group">
-                <label>Check-in Date</label>
-                <input class="form-control prc" id="checkin-date" th:field="*{checkInDate}" type="date" pattern="yyyy-MM-dd" required />
-            </div>
-
-            <!-- Check-out Date -->
-            <div class="form-group">
-                <label>Check-out Date</label>
-                <input class="form-control prc" id="checkout-date" th:field="*{checkOutDate}" type="date" pattern="yyyy-MM-dd" required />
-            </div>
-
-
-            <!-- Room Type -->
-            <div class="form-group">
-                <label>Room</label>
-                <select class="form-control prc" id="room" name="roomId" required>
-                    <option value="Single Deluxe">Single Deluxe</option>
-                    <option value="Single Standard">Single Standard</option>
-                    <option value="Double Deluxe">Double Deluxe</option>
-                    <option value="Double Standard">Double Standard</option>
-                    <option value="Family Deluxe">Family Deluxe</option>
-                    <option value="Family Standard">Family Standard</option>
-                    <option value="Honeymoon Suite">Honeymoon Suite</option>
-                    <option value="Honeymoon Deluxe Suite">Honeymoon Deluxe Suite</option>
-                </select>
-            </div>
-
-            <!-- Submit form -->
-            <button class="sub-btn">Submit</button>
-        </form>
-    </div>
+    <h2 class="sub-title text-center">Book Your Room Now</h2>
+    <section class="card booking-form col-6" style="width:60%;margin: auto">
+        <div class="card-header">Booking Form</div>
+        <div class="card-body">
+            <form th:action="@{/proceed-booking}" method="post">
+                <div class="card-text">
+                    <p>Room Type: <span th:text="${room.getRoomType()} + ' ' + ${room.getBedSize()}"></span></p>
+                    <p>Description: <span th:text="${room.getDescription()}"></span></p>
+                    <p>Price per night: €<span th:text="${room.getPricePerNight()}"></span></p>
+                    <p>Stay Duration:
+                        <span th:text="${#dates.format(checkInDate, 'dd-MM-yyyy HH:mm')}"></span>
+                        to
+                        <span th:text="${#dates.format(checkOutDate, 'dd-MM-yyyy HH:mm')}"></span>
+                    </p>
+                    <input type="hidden" id="checkInDate" th:value="${checkInDate}"/>
+                    <input type="hidden" id="checkOutDate" th:value="${checkOutDate}"/>
+                    <p>Number of People: <span th:text="${people}"></span></p>
+                </div>
+                <button type="submit" class="btn btn-primary">Proceed</button>
+                <a class="btn btn-secondary" th:href="@{/home}">Cancel</a>
+            </form>
+        </div>
+    </section>
 </div>
+
 </body>
 </html>

@@ -3,7 +3,6 @@ package com.project.hotelreservation.model.entity;
 import com.project.hotelreservation.enums.BookingStatus;
 import jakarta.persistence.*;
 import lombok.Data;
-import com.project.hotelreservation.service.BookingState;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -52,31 +51,6 @@ public class Booking {
             inverseJoinColumns = @JoinColumn(name = "service_id"))
     private List<AdditionalServices> additionalServices;
 
-
-    //private BookingState state;
-    public void checkIn() {
-        // Handle check-in logic for the booking
-        // Transition to CheckedInState if valid
-        if (this.status == BookingStatus.PENDING) {
-            this.status = BookingStatus.COMPLETED;
-        }
-    }
-
-    public void checkOut() {
-        // Handle check-out logic for the booking
-        // Transition to CheckedOutState
-        if (this.status == BookingStatus.COMPLETED) {
-            this.status = BookingStatus.COMPLETED;
-        }
-    }
-
-    public void cancel() {
-        // Handle cancellation logic for the booking
-        // Transition to CancelledState
-        if (this.status == BookingStatus.PENDING) {
-            this.status = BookingStatus.CANCELLED;
-        }
-    }
-
 }
+
 

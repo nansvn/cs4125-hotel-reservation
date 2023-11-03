@@ -16,9 +16,32 @@
   />
 </head>
 <body>
-<div class="container text-center mt-5">
+<div class="container text-center my-4">
   <i class="fas fa-hotel fa-5x"></i>
 </div>
+<section class="cover-main " id="room_page" th:fragment="navbar">
+  <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+    <div class="container">
+      <br>
+      <a class="navbar-brand" th:href="@{/home}"><b>Blue Roof Hotels</b></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link text-white" th:href="@{/home}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" th:href="@{/logout}">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</section>
+
 <div class="container">
   <h2 class="sub-title">Bill Management</h2>
   <div class="bill-form card">
