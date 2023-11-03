@@ -29,16 +29,15 @@
     <section class="card booking-form col-6" style="width:60%;margin: auto">
         <div class="card-header">Booking Form</div>
         <div class="card-body">
-            <form th:action="@{/save-booking}" method="post">
-                <div class="card-text">
-                    <div class="confirmation">
-                        <p>Confirm Your Order</p>
-                        <!-- show overview of total price etc. here -->
-                    </div>
+            <div class="card-text">
+                <div class="confirmation">
+                    <p>Congrats! Order has been created.</p>
+                    <!-- show overview of total price etc. here -->
                 </div>
-                <button type="submit" class="btn btn-primary mt-4">Yes</button>
-                <a class="btn btn-secondary mt-4" th:href="@{/home}">Cancel</a>
-            </form>
+            </div>
+            <p>Do you wish to pay your order now? </p>
+            <a class="btn btn-primary mt-4" th:href="@{/payment}">Yes</a>
+            <a class="btn btn-secondary mt-4" th:href="@{/home}">No</a>
         </div>
     </section>
 </div>
