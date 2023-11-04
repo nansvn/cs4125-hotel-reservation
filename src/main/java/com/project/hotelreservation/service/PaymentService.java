@@ -29,6 +29,4 @@ public class PaymentService {
 
         return paymentRepository.save(payment);
     }
-
-    // Add other methods as needed, such as retrieving payments or updating payment status
 }

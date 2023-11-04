@@ -23,12 +23,10 @@ public class PaymentController {
 
     @GetMapping("/payment")
     public String showPaymentPage() {
-        // Perform any necessary logic or setup
-        return "customer/payment"; // This should correspond to the Thymeleaf template name
+        return "customer/payment";
     }
     @PostMapping("/make-payment")
     public String makePayment(@ModelAttribute PaymentRequest paymentRequest, HttpSession session) {
-        // Fetch necessary data from the session or other sources
         Room room = (Room) session.getAttribute("room");
         Customer customer = (Customer) session.getAttribute("customer");
         List<AdditionalServices> selectedServices = (List<AdditionalServices>) session.getAttribute("selectedServices");
@@ -39,7 +37,7 @@ public class PaymentController {
         Payment payment = paymentService.makePayment(paymentRequest.getAmount(), paymentRequest.getPaymentMethod());
 
         if (payment == null) {
-            // Handle payment failure (e.g., invalid booking)
+            // Handle payment failure
             return "redirect:/payment-failure";
         }
         return "redirect:/payment-success";
