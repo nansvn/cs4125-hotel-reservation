@@ -1,5 +1,6 @@
 package com.project.hotelreservation.controller;
 
+import com.project.hotelreservation.enums.BookingStatus;
 import com.project.hotelreservation.model.entity.AdditionalServices;
 import com.project.hotelreservation.model.entity.Booking;
 import com.project.hotelreservation.model.entity.Customer;
@@ -45,12 +46,16 @@ public class BookingController {
     @PostMapping("/confirm-booking")
     public String confirmBooking(@RequestParam(required = false) List<Integer> serviceIds,
                                  HttpSession session) {
-        List<AdditionalServices> selectedServices = additionalServicesService.getServicesByIds(serviceIds);
-        Room room = (Room) session.getAttribute("room");
-        Customer customer = (Customer) session.getAttribute("customer");
-        Date checkInDate = (Date) session.getAttribute("checkInDate");
-        Date checkOutDate = (Date) session.getAttribute("checkOutDate");
-        bookingService.save(room, selectedServices, customer, checkInDate, checkOutDate);
+        if(serviceIds != null) {
+            List<AdditionalServices> selectedServices = additionalServicesService.getServicesByIds(serviceIds);
+            Room room = (Room) session.getAttribute("room");
+            Customer customer = (Customer) session.getAttribute("customer");
+            Date checkInDate = (Date) session.getAttribute("checkInDate");
+            Date checkOutDate = (Date) session.getAttribute("checkOutDate");
+            bookingService.save(room, selectedServices, customer, checkInDate, checkOutDate);
+        }else{
+
+        }
         return "customer/booking-confirmation";
     }
 

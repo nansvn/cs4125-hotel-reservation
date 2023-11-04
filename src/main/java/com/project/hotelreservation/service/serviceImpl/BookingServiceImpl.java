@@ -44,5 +44,6 @@ public class BookingServiceImpl implements BookingService {
     public void cancelOrder(Long bookingId) {
         bookingRepository.deleteBookingByBookingId(bookingId);
     }
-
 }
+
+
