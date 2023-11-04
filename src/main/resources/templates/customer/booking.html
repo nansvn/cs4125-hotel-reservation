@@ -30,7 +30,6 @@
     <section class="card booking-form col-6" style="width:60%;margin: auto">
         <div class="card-header">Booking Form</div>
         <div class="card-body">
-            <form th:action="@{/proceed-booking}" method="post">
                 <div class="card-text">
                     <p>Room Type: <span th:text="${room.getRoomType()} + ' ' + ${room.getBedSize()}"></span></p>
                     <p>Description: <span th:text="${room.getDescription()}"></span></p>
@@ -44,9 +43,8 @@
                     <input type="hidden" id="checkOutDate" th:value="${checkOutDate}"/>
                     <p>Number of People: <span th:text="${people}"></span></p>
                 </div>
-                <button type="submit" class="btn btn-primary">Proceed</button>
+                <a class="btn btn-primary" th:href="@{/proceed-booking}">Proceed</a>
                 <a class="btn btn-secondary" th:href="@{/home}">Cancel</a>
-            </form>
         </div>
     </section>
 </div>

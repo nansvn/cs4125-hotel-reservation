@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface BookingService {
-    void save(Room room, List<AdditionalServices> services, Customer customer, Date checkInDate, Date checkOutDate);
+    Booking save(Room room, List<AdditionalServices> services, Customer customer, Date checkInDate, Date checkOutDate);
     List<Booking> getOrdersByCustomer(Customer customer);
     void cancelOrder(Long bookingId);
 }

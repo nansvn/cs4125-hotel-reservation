@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "room_id")
+    @Column(name = "id")
     private Integer roomId;
 
     @Column(name = "room_number")
