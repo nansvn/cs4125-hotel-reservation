@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Payment successful</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reservation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+          crossorigin="anonymous">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css"
+            integrity="sha512-c93ifPoTvMdEJH/rKIcBx//AL1znq9+4/RmMGafI/vnTFe/dKwnn1uoeszE2zJBQTS1Ck5CqSBE+34ng2PthJg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+</head>
+
+<body>
+<!--icon -->
+<div th:insert="~{fragments/icon :: icon}"></div>
+
+<!--navbar-->
+<div th:insert="~{fragments/navbar :: navbar}"></div>
+<body>
+<!-- Payment Successful Section -->
+<div class="payment-success" style="text-align: center; margin-top: 20px;">
+    <h1>Payment Successful</h1>
+    <p>Your payment has been processed successfully.</p>
+    <a class="btn btn-primary mt-4" th:href="@{/home}">Exit back home</a>
+</div>
+</body>
+</body>
+</html>

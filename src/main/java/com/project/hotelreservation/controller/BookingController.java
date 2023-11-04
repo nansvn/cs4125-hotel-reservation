@@ -28,12 +28,6 @@ public class BookingController {
     public String showBookingPage(Model model) {
         // Create a new Booking and set the initial state
         Booking booking = new Booking();
-
-        // Handle state transitions by calling the methods directly
-        booking.checkIn(); // This will transition the state to CheckedInState if valid
-        booking.checkOut(); // This will transition the state to CheckedOutState
-        booking.cancel(); // This will transition the state to CancelledState
-
         model.addAttribute("newBooking", new Booking());
         return "customer/booking";
     }
@@ -77,6 +71,7 @@ public class BookingController {
         return "redirect:/view-orders";
     }
 }
+
 
 
 

@@ -22,43 +22,31 @@
 <!--navbar-->
 <div th:insert="~{fragments/navbar :: navbar}"></div>
 
-<!-- main content -->
 <div class="container">
-    <h2 class="sub-title">Bill Management</h2>
-    <div class="bill-form card">
-        <h3>Enter Bill Details</h3>
-        <br>
-        <form id="billForm" name="billForm" th:action="@{/submit-bill}" method="POST">
-            <div class="form-group">
-                <label>Payment Amount</label>
-                <input class="form-control" type="number" name="amount" required/>
-            </div>
-            <div class="form-group">
-                <label>Payment Method</label>
-                <select class="form-control" name="PaymentMethod" required>
-                    <option th:each="method : ${T(com.project.hotelreservation.enums.PaymentMethod).values()}"
-                            th:value="${method}" th:text="${method}"></option>
-                </select>
-            </div>
+    <h2 class="sub-title text-center">Payment Information</h2>
+    <section class="card booking-form col-6" style="width:60%;margin: auto">
+        <div class="card-header">Payment Form</div>
+        <div class="card-body">
+            <form action="/make-payment" method="post">
+                <div class="card-text">
+                    <label for="amount">Amount:</label>
+                    <input type="text" id="amount" name="amount" required><br>
 
-            <div class="form-group">
-                <label>Payment Date</label>
-                <input class="form-control" type="date" name="paymentDate" required/>
-            </div>
-            <div class="form-group">
-                <label>Payment Status</label>
-                <select class="form-control" name="status" required>
-                    <option value="Paid">Paid</option>
-                    <option value="Unpaid">Unpaid</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Associated Payment ID</label>
-                <input class="form-control" type="number" name="paymentId" required/>
-            </div>
-            <button class="sub-btn">Submit Bill</button>
-        </form>
-    </div>
+                    <label for="paymentMethod">Payment Method:</label>
+                    <select id="paymentMethod" name="paymentMethod" required>
+                        <option value="CASH">Cash</option>
+                        <option value="CREDIT_CARD">Credit Card</option>
+                        <option value="DEBIT_CARD">Debit Card</option>
+                    </select><br>
+
+                    <label for="bookingId">Booking ID:</label>
+                    <input type="text" id="bookingId" name="bookingId" required><br>
+                </div>
+                <button type="submit" class="btn btn-primary">Make Payment</button>
+                <a class="btn btn-secondary" href="/booking">Cancel</a>
+            </form>
+        </div>
+    </section>
 </div>
 </body>
 </html>
