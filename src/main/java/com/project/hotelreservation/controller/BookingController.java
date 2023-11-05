@@ -90,4 +90,5 @@ public class BookingController {
         bookingService.cancelOrder(bookingId);
         return "redirect:/view-orders";
     }
+
 }
