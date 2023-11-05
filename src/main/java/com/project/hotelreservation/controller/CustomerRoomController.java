@@ -16,11 +16,17 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author Nan
+ */
 @Controller
 @AllArgsConstructor
 public class CustomerRoomController {
     private RoomService roomService;
 
+
+    // user can search the available rooms with checkin, checkout date and no of ppl
+    // return the search result list
     @GetMapping("/search")
     public String showSearchResult(@RequestParam("checkInDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkInDate,
                                    @RequestParam("checkOutDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkOutDate,
@@ -28,36 +34,40 @@ public class CustomerRoomController {
                                    HttpSession session,
                                    Model model) {
         List<Room> rooms = roomService.searchRoom(checkInDate, checkOutDate, people);
+
+        // add room list as mode attribute for display purpose
         model.addAttribute("rooms", rooms);
+
+        // save checkin/out, ppl in session to be used later in other functions
         session.setAttribute("checkInDate", checkInDate);
         session.setAttribute("checkOutDate", checkOutDate);
         session.setAttribute("people", people);
+
         return "customer/room";
     }
 
+    // after user click the room they want to book from search result page they will be here
+    // check in/out time adjusted
+    // return the booking info overview page
     @GetMapping("/book/{roomId}")
     public String bookRoom(@PathVariable("roomId") Integer roomId, HttpSession session, Model model) {
         Room room = roomService.getRoomById(roomId);
         session.setAttribute("room", room);
 
-        // check in and check out time should be modified
-        // set check in time to 12am and check out time to 9am
+        // set check-in time to 12 pm (noon)
         Date checkInDate = (Date) session.getAttribute("checkInDate");
-        // convert to LocalDateTime item
         LocalDateTime localCheckInDate = LocalDateTime.ofInstant(checkInDate.toInstant(), ZoneId.systemDefault());
-        LocalDateTime updatedCheckInDate = localCheckInDate.plusHours(12); // add 12 hours
-        // convert back
+        LocalDateTime updatedCheckInDate = localCheckInDate.withHour(12).withMinute(0).withSecond(0).withNano(0);
         Date newCheckInDate = Date.from(updatedCheckInDate.atZone(ZoneId.systemDefault()).toInstant());
-        // update session
+        // update in the session
         session.setAttribute("checkInDate", newCheckInDate);
 
+        // set check-out time to 9 am
         Date checkOutDate = (Date) session.getAttribute("checkOutDate");
-        // convert to LocalDateTime item
         LocalDateTime localCheckOutDate = LocalDateTime.ofInstant(checkOutDate.toInstant(), ZoneId.systemDefault());
-        LocalDateTime updatedCheckOutDate = localCheckOutDate.plusHours(9); // add 12 hours
-        // convert back
+        LocalDateTime updatedCheckOutDate = localCheckOutDate.withHour(9).withMinute(0).withSecond(0).withNano(0);
         Date newCheckOutDate = Date.from(updatedCheckOutDate.atZone(ZoneId.systemDefault()).toInstant());
-        // update session
+        // update in the session
         session.setAttribute("checkOutDate", newCheckOutDate);
 
         model.addAttribute("room", room);

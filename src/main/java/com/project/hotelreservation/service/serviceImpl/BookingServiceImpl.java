@@ -21,7 +21,7 @@ public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
 
     @Override
-    public Booking save(Room room, List<AdditionalServices> services, Customer customer, Date checkInDate, Date checkOutDate) {
+    public void save(Room room, List<AdditionalServices> services, Customer customer, Date checkInDate, Date checkOutDate) {
         Booking booking = new Booking();
         booking.setRoom(room);
         booking.setCustomer(customer);
@@ -32,7 +32,6 @@ public class BookingServiceImpl implements BookingService {
         booking.setBookingDate(Timestamp.from(Instant.now()));
         booking.setStatus(BookingStatus.PENDING);
         bookingRepository.save(booking);
-        return booking;
     }
 
     @Override
