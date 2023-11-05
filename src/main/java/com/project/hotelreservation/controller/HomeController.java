@@ -10,16 +10,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
+
+/**
+ * @author Nan
+ */
 @Controller
 @AllArgsConstructor
 public class HomeController {
     private RoomService roomService;
 
+    // initial page if user not logged in
     @GetMapping("/")
     public String showLogin() {
         return "login";
     }
 
+    // redirect users to different page according to their role
     @GetMapping("/home")
     public String showHome(Model model, HttpSession session) {
         if (session.getAttribute("customer") != null) {

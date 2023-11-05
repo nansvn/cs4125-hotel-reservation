@@ -45,13 +45,11 @@ public class Booking {
     @OneToOne(mappedBy = "booking")
     private Payment payment;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "booking_services",
             joinColumns = @JoinColumn(name = "booking_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id"))
     private List<AdditionalServices> additionalServices;
-
 }
-
 
