@@ -1,6 +1,4 @@
 package com.project.hotelreservation.controller;
-
-import com.project.hotelreservation.enums.BookingStatus;
 import com.project.hotelreservation.model.entity.AdditionalServices;
 import com.project.hotelreservation.model.entity.Booking;
 import com.project.hotelreservation.model.entity.Customer;
@@ -9,6 +7,7 @@ import com.project.hotelreservation.service.AdditionalServicesService;
 import com.project.hotelreservation.service.BookingService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,12 +59,16 @@ public class BookingController {
     }
 
     // view history orders
-    // unfinished
     @GetMapping("/view-orders")
-    public String showOrders(HttpSession session, Model model) {
+    public String viewOrders(Model model, HttpSession session) {
         Customer customer = (Customer) session.getAttribute("customer");
-        model.addAttribute("orders", bookingService.getOrdersByCustomer(customer));
-        return "customer/orders";
+        if (customer != null) {
+            List<Booking> userBookings = bookingService.getOrdersByCustomer(customer);
+            model.addAttribute("userBookings", userBookings);
+            return "customer/orders";
+        } else {
+            return "redirect:/login";
+        }
     }
 
     // cancel order
