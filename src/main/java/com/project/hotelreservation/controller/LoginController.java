@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
+
+/**
+ * @author Nan
+ */
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
@@ -25,6 +29,7 @@ public class LoginController {
         return "login";
     }
 
+    // login and save the user to session
     @PostMapping("/login")
     public String login(
             @RequestParam("username") String username,
@@ -47,6 +52,7 @@ public class LoginController {
         }
     }
 
+    // log out
     @GetMapping("/logout")
     public String logout(Model model, HttpSession session) {
         model.addAttribute("logoutMessage", "Logout successfully");

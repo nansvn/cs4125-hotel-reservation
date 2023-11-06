@@ -1,6 +1,4 @@
 package com.project.hotelreservation.controller;
-
-import com.project.hotelreservation.enums.BookingStatus;
 import com.project.hotelreservation.model.entity.AdditionalServices;
 import com.project.hotelreservation.model.entity.Booking;
 import com.project.hotelreservation.model.entity.Customer;
@@ -9,6 +7,7 @@ import com.project.hotelreservation.service.AdditionalServicesService;
 import com.project.hotelreservation.service.BookingService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * @author Luxin, Neema, Nan
+ */
 @Controller
 @AllArgsConstructor
 public class BookingController {
     private final BookingService bookingService;
     private final AdditionalServicesService additionalServicesService;
+
 
     @GetMapping("/booking")
     public String showBookingPage(Model model) {
@@ -33,39 +35,52 @@ public class BookingController {
         return "customer/booking";
     }
 
-    // proceed to select the additional services
+    /**
+     * @author Nan
+     */
+    // after customer select the room they want to book, they will be here
+    // show a list of additional services for selection
     @GetMapping("/proceed-booking")
     public String processBooking(Model model) {
+
         model.addAttribute("additionalServices", additionalServicesService.getAllAdditionalServices());
         return "customer/additional-services";
     }
 
-
-    // create the order with collected additional services info
+    /**
+     * @author Nan
+     */
+    // after customer select the additional services they will be here
+    // order created with collected additional services info
     // display the order overview
     @PostMapping("/confirm-booking")
     public String confirmBooking(@RequestParam(required = false) List<Integer> serviceIds,
                                  HttpSession session) {
-        if(serviceIds != null) {
+        Room room = (Room) session.getAttribute("room");
+        Customer customer = (Customer) session.getAttribute("customer");
+        Date checkInDate = (Date) session.getAttribute("checkInDate");
+        Date checkOutDate = (Date) session.getAttribute("checkOutDate");
+        if (serviceIds != null) {
             List<AdditionalServices> selectedServices = additionalServicesService.getServicesByIds(serviceIds);
-            Room room = (Room) session.getAttribute("room");
-            Customer customer = (Customer) session.getAttribute("customer");
-            Date checkInDate = (Date) session.getAttribute("checkInDate");
-            Date checkOutDate = (Date) session.getAttribute("checkOutDate");
             bookingService.save(room, selectedServices, customer, checkInDate, checkOutDate);
-        }else{
-
+        } else {
+            bookingService.save(room, null, customer, checkInDate, checkOutDate);
         }
+
         return "customer/booking-confirmation";
     }
 
     // view history orders
-    // unfinished
     @GetMapping("/view-orders")
-    public String showOrders(HttpSession session, Model model) {
+    public String viewOrders(Model model, HttpSession session) {
         Customer customer = (Customer) session.getAttribute("customer");
-        model.addAttribute("orders", bookingService.getOrdersByCustomer(customer));
-        return "customer/orders";
+        if (customer != null) {
+            List<Booking> userBookings = bookingService.getOrdersByCustomer(customer);
+            model.addAttribute("userBookings", userBookings);
+            return "customer/orders";
+        } else {
+            return "redirect:/login";
+        }
     }
 
     // cancel order
@@ -75,9 +90,5 @@ public class BookingController {
         bookingService.cancelOrder(bookingId);
         return "redirect:/view-orders";
     }
+
 }
-
-
-
-
-
