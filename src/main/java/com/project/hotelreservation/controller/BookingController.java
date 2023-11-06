@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,6 @@ import java.util.List;
 public class BookingController {
     private final BookingService bookingService;
     private final AdditionalServicesService additionalServicesService;
-
 
     @GetMapping("/booking")
     public String showBookingPage(Model model) {
@@ -55,7 +55,7 @@ public class BookingController {
     // display the order overview
     @PostMapping("/confirm-booking")
     public String confirmBooking(@RequestParam(required = false) List<Integer> serviceIds,
-                                 HttpSession session) {
+                                 HttpSession session, Model model) {
         Room room = (Room) session.getAttribute("room");
         Customer customer = (Customer) session.getAttribute("customer");
         Date checkInDate = (Date) session.getAttribute("checkInDate");
@@ -66,7 +66,7 @@ public class BookingController {
         } else {
             bookingService.save(room, null, customer, checkInDate, checkOutDate);
         }
-
+        model.addAttribute("room", room);
         return "customer/booking-confirmation";
     }
 
@@ -90,5 +90,4 @@ public class BookingController {
         bookingService.cancelOrder(bookingId);
         return "redirect:/view-orders";
     }
-
 }
