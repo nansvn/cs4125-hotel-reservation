@@ -42,6 +42,10 @@
                     <input type="hidden" id="checkInDate" th:value="${checkInDate}"/>
                     <input type="hidden" id="checkOutDate" th:value="${checkOutDate}"/>
                     <p>Number of People: <span th:text="${people}"></span></p>
+                    <p>Room Availability:
+                        <span th:if="${room.available}">Available</span>
+                        <span th:unless="${room.available}">Not Available</span>
+                    </p>
                 </div>
                 <a class="btn btn-primary" th:href="@{/proceed-booking}">Proceed</a>
                 <a class="btn btn-secondary" th:href="@{/home}">Cancel</a>
