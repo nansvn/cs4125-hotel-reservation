@@ -12,4 +12,5 @@ public interface BookingService {
     void save(Room room, List<AdditionalServices> services, Customer customer, Date checkInDate, Date checkOutDate);
     List<Booking> getOrdersByCustomer(Customer customer);
     void cancelOrder(Long bookingId);
+
 }
