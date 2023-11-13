@@ -33,6 +33,7 @@
             <th>Check-In Date</th>
             <th>Check-Out Date</th>
             <th>Status</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -43,6 +44,10 @@
             <td th:text="${#dates.format(booking.checkInDate, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="${#dates.format(booking.checkOutDate, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="${booking.status}"></td>
+            <td>
+                <a th:href="@{/cancel-order(bookingId=${booking.bookingId})}" class="btn btn-danger">Cancel</a>
+            </td>
+
         </tr>
         </tbody>
     </table>
