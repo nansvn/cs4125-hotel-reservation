@@ -16,6 +16,7 @@ import com.project.hotelreservation.service.BookingStateFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -51,6 +52,7 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findBookingByCustomer(customer);
     }
 
+    @Transactional
     @Override
     public void cancelOrder(Long bookingId) {
         Optional<Booking> optional = bookingRepository.findById(bookingId);

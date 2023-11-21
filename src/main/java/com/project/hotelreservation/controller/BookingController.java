@@ -84,7 +84,6 @@ public class BookingController {
     }
 
     // cancel order
-    // unfinished
     @GetMapping("/cancel-order")
     public String cancelOrders(@RequestParam Long bookingId) {
         bookingService.cancelOrder(bookingId);

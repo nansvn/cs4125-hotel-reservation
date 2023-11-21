@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -46,6 +47,6 @@ public class Room {
     @Column(name = "image_path")
     private String imagePath;
 
-    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL)
-    private Booking booking;
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<Booking> booking;
 }
