@@ -43,7 +43,7 @@ public class Booking {
     @JoinColumn(name = "user_id")
     private Customer customer;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
 

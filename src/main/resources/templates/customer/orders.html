@@ -29,7 +29,8 @@
         <thead>
         <tr>
             <th>Booking ID</th>
-            <th>Room</th>
+            <th>Room No.</th>
+            <th>Room Type</th>
             <th>Check-In Date</th>
             <th>Check-Out Date</th>
             <th>Status</th>
@@ -40,7 +41,8 @@
         <!-- Iterate over the user's booking details and display them -->
         <tr th:each="booking : ${userBookings}">
             <td th:text="${booking.bookingId}"></td>
-            <td th:text="${booking.room.roomType}"></td>
+            <td th:text="${booking.room.roomNumber}"  ></td>
+            <td th:text="${booking.room.roomType} + ' ' + ${booking.room.bedSize}" ></td>
             <td th:text="${#dates.format(booking.checkInDate, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="${#dates.format(booking.checkOutDate, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="${booking.status}"></td>
