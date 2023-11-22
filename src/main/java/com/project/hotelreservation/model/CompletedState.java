@@ -8,6 +8,7 @@ public class CompletedState implements BookingState {
     @Override
     public void handle(Booking booking) {
         // Handle operations for COMPLETED state
+        System.out.println("Completed reservation email is sent...");
     }
 
     @Override

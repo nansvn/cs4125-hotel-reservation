@@ -62,9 +62,9 @@ public class BookingController {
         Date checkOutDate = (Date) session.getAttribute("checkOutDate");
         if (serviceIds != null) {
             List<AdditionalServices> selectedServices = additionalServicesService.getServicesByIds(serviceIds);
-            bookingService.save(room, selectedServices, customer, checkInDate, checkOutDate);
+           bookingService.save(room, selectedServices, customer, checkInDate, checkOutDate, false); // Payment not completed yet
         } else {
-            bookingService.save(room, null, customer, checkInDate, checkOutDate);
+           bookingService.save(room, null, customer, checkInDate, checkOutDate, false); // Payment not completed yet
         }
         model.addAttribute("room", room);
         return "customer/booking-confirmation";

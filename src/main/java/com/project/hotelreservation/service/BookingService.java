@@ -9,7 +9,7 @@ package com.project.hotelreservation.service;
         import java.util.List;
 
 public interface BookingService {
-    void save(Room room, List<AdditionalServices> services, Customer customer, Date checkInDate, Date checkOutDate);
+    void save(Room room, List<AdditionalServices> services, Customer customer, Date checkInDate, Date checkOutDate,boolean paymentCompleted);
     List<Booking> getOrdersByCustomer(Customer customer);
     void cancelOrder(Long bookingId);
 }

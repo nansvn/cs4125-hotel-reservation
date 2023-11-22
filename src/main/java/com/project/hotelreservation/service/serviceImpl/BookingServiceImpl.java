@@ -32,18 +32,29 @@ public class BookingServiceImpl implements BookingService {
     private final BookingStateFactory bookingStateFactory;
 
     @Override
-    public void save(Room room, List<AdditionalServices> services, Customer customer, Date checkInDate, Date checkOutDate) {
+    public void save(Room room, List<AdditionalServices> services, Customer customer, Date checkInDate, Date checkOutDate, boolean paymentCompleted) {
         Booking booking = new Booking();
         booking.setRoom(room);
         booking.setCustomer(customer);
         booking.setAdditionalServices(services);
         booking.setCheckInDate(checkInDate);
         booking.setCheckOutDate(checkOutDate);
-        booking.setPayment(null);
         booking.setBookingDate(Timestamp.from(Instant.now()));
-        BookingState bookingState = bookingStateFactory.getBookingState(BookingStatus.PENDING);
+
+        BookingState bookingState;
+        if (paymentCompleted) {
+            booking.complete();
+            bookingState = bookingStateFactory.getBookingState(BookingStatus.COMPLETED);
+
+        } else {
+            booking.process();
+            bookingState = bookingStateFactory.getBookingState(BookingStatus.PENDING);
+            booking.setPayment(null); // Assume payment information is not available at this point
+
+        }
         booking.transitionToState(bookingState);
         bookingRepository.save(booking);
+        roomRepository.save(room);
     }
 
 
