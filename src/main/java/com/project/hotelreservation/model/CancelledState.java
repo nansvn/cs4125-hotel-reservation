@@ -7,7 +7,14 @@ public class CancelledState implements BookingState {
     @Override
     public void handle(Booking booking) {
         // Handle operations for CANCELLED state
+        processRefund(booking);
+
     }
+
+    private void processRefund(Booking booking) {
+        System.out.println("Waiting for payment to proceed....");
+    }
+
 
     @Override
     public BookingStatus getStatus() {

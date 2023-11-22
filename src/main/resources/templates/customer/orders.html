@@ -48,6 +48,7 @@
             <td th:text="${booking.status}"></td>
             <td>
                 <a th:href="@{/cancel-order(bookingId=${booking.bookingId})}" class="btn btn-danger">Cancel</a>
+                <a th:if="${#strings.toString(booking.status) == 'PENDING' }" th:href="@{/payment(bookingId=${booking.bookingId})}" class="btn btn-success">Pay Now</a>
             </td>
 
         </tr>
