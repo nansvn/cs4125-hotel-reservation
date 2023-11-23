@@ -1,4 +1,4 @@
-package com.project.hotelreservation.service;
+package com.project.hotelreservation.model;
 
 import com.project.hotelreservation.enums.BookingStatus;
 import com.project.hotelreservation.model.BookingState;

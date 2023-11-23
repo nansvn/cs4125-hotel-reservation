@@ -60,7 +60,7 @@ public class RoomServiceImpl implements RoomService {
         room.setDescription(description);
         room.setImagePath(imagePath);
         //store the room in the repository
-        room = roomRepository.save(room);
+        roomRepository.save(room);
     }
 
     @Override
