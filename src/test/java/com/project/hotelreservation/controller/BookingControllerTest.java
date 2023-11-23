@@ -25,28 +25,28 @@ public class BookingControllerTest {
 
 
     @Test
-    public void testShowBookingPage() throws Exception {
-        // Test showing booking page
+    public void testShowBookingPage()
+            throws Exception {
     }
 
     @Test
-    public void testProcessBooking_NoServicesSelected() throws Exception {
-        // Test processing booking without selecting additional services
+    public void testProcessBooking_NoServicesSelected()
+            throws Exception {
     }
 
     @Test
-    public void testProcessBooking_WithServicesSelected() throws Exception {
-        // Test processing booking with selected additional services
+    public void testProcessBooking_WithServicesSelected()
+            throws Exception {
     }
 
     @Test
-    public void testViewOrders_NoOrders() throws Exception {
-        // Test viewing orders when no orders are available
+    public void testViewOrders_NoOrders()
+            throws Exception {
     }
 
     @Test
-    public void testViewOrders_WithOrders() throws Exception {
-        // Test viewing orders with available orders
+    public void testViewOrders_WithOrders()
+            throws Exception {
     }
 }
 

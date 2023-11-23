@@ -1,6 +1,5 @@
 package com.project.hotelreservation.controller;
 
-import com.project.hotelreservation.service.BookingService;
 import com.project.hotelreservation.service.CustomerService;
 import com.project.hotelreservation.service.RoomService;
 import com.project.hotelreservation.service.serviceImpl.RoomAvailabilitySubject;
@@ -29,23 +28,24 @@ public class CustomerRoomControllerTest {
     private RoomAvailabilitySubject roomAvailabilitySubject;
 
     @Test
-    public void testShowSearchResult_WithAvailableRooms() throws Exception {
-        // Test showing search results with available rooms
+    public void testShowSearchResult_WithAvailableRooms()
+            throws Exception {
+
     }
 
     @Test
-    public void testShowSearchResult_NoAvailableRooms() throws Exception {
-        // Test showing search results with no available rooms
+    public void testShowSearchResult_NoAvailableRooms()
+            throws Exception {
     }
 
     @Test
-    public void testBookRoom_Success() throws Exception {
-        // Test booking a room successfully
+    public void testBookRoom_Success()
+            throws Exception {
     }
 
     @Test
-    public void testBookRoom_InvalidRoom() throws Exception {
-        // Test booking an invalid room
+    public void testBookRoom_InvalidRoom()
+            throws Exception {
     }
 }
 
