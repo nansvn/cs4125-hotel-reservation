@@ -26,6 +26,11 @@
 <!-- main content-->
 <section class="cards-section text-center mt-4">
     <div class="container">
+        <!-- Display error message if exists -->
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <strong>Error:</strong> <span th:text="${errorMessage}"></span>
+        </div>
+
         <!-- Start a new row for the cards -->
         <div class="row">
             <div th:each="room : ${rooms}" class="col-md-4 mb-4">

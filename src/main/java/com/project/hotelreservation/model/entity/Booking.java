@@ -1,6 +1,8 @@
 package com.project.hotelreservation.model.entity;
 
 import com.project.hotelreservation.enums.BookingStatus;
+import com.project.hotelreservation.model.BookingState;
+import com.project.hotelreservation.model.PendingState;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,11 +36,14 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
+    @Transient
+    private BookingState bookingState;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Customer customer;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
 
@@ -51,5 +56,26 @@ public class Booking {
             joinColumns = @JoinColumn(name = "booking_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id"))
     private List<AdditionalServices> additionalServices;
-}
 
+    public Booking() {
+        this.status = BookingStatus.PENDING;
+        this.bookingState = new PendingState();
+    }
+
+    public void transitionToState(BookingState newState) {
+        this.bookingState = newState;
+        this.status = newState.getStatus();
+    }
+
+    public void process() {
+        bookingState.handle(this);
+    }
+
+    public void cancel() {
+        bookingState.handle(this);
+    }
+
+    public void complete() {
+        bookingState.handle(this);
+    }
+}

@@ -34,20 +34,25 @@ public class CustomerRoomController {
                                    @RequestParam("people") int people,
                                    HttpSession session,
                                    Model model) {
-        List<Room> rooms = roomService.searchRoom(checkInDate, checkOutDate, people);
+        if (checkInDate.after(checkOutDate)) {
+            // If check-in date is after check-out date, set the error message
+            model.addAttribute("errorMessage", "Check-in date should be less than the check-out date.");
+        } else {
+            List<Room> rooms = roomService.searchRoom(checkInDate, checkOutDate, people);
 
-        // add room list as mode attribute for display purpose
-        model.addAttribute("rooms", rooms);
+            // add room list as mode attribute for display purpose
+            model.addAttribute("rooms", rooms);
 
-        // save checkin/out, ppl in session to be used later in other functions
-        session.setAttribute("checkInDate", checkInDate);
-        session.setAttribute("checkOutDate", checkOutDate);
-        session.setAttribute("people", people);
+            // save checkin/out, ppl in session to be used later in other functions
+            session.setAttribute("checkInDate", checkInDate);
+            session.setAttribute("checkOutDate", checkOutDate);
+            session.setAttribute("people", people);
+        }
 
         return "customer/room";
     }
 
-    // after user click the room they want to book from search result page they will be here
+        // after user click the room they want to book from search result page they will be here
     // check in/out time adjusted
     // return the booking info overview page
     @GetMapping("/book/{roomId}")
