@@ -48,7 +48,5 @@ public class BookingControllerTest {
     public void testViewOrders_WithOrders() throws Exception {
         // Test viewing orders with available orders
     }
-
-    // Write similar test methods for other endpoints in BookingController
 }
 

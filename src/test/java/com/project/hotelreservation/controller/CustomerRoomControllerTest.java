@@ -47,7 +47,5 @@ public class CustomerRoomControllerTest {
     public void testBookRoom_InvalidRoom() throws Exception {
         // Test booking an invalid room
     }
-
-    // Write similar test methods for other endpoints in CustomerRoomController
 }
 
