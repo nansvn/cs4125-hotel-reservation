@@ -2,9 +2,6 @@ package com.project.hotelreservation.service.serviceImpl;
 
 import com.project.hotelreservation.enums.BookingStatus;
 import com.project.hotelreservation.model.BookingState;
-import com.project.hotelreservation.model.CancelledState;
-import com.project.hotelreservation.model.CompletedState;
-import com.project.hotelreservation.model.PendingState;
 import com.project.hotelreservation.model.entity.AdditionalServices;
 import com.project.hotelreservation.model.entity.Booking;
 import com.project.hotelreservation.model.entity.Customer;
@@ -12,9 +9,8 @@ import com.project.hotelreservation.model.entity.Room;
 import com.project.hotelreservation.repository.BookingRepository;
 import com.project.hotelreservation.repository.RoomRepository;
 import com.project.hotelreservation.service.BookingService;
-import com.project.hotelreservation.service.BookingStateFactory;
+import com.project.hotelreservation.model.BookingStateFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
