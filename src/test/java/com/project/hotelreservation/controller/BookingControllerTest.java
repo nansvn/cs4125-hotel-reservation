@@ -91,6 +91,7 @@ public class BookingControllerTest {
 
         assertEquals("redirect:/login", viewName);
     }
+
 }
 
 
