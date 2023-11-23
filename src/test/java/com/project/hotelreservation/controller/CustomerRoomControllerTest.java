@@ -70,7 +70,6 @@ public class CustomerRoomControllerTest {
         assertTrue(mockRoom.isAvailable());
 
     }
-
 }
 
 
