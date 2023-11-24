@@ -7,11 +7,21 @@ import com.project.hotelreservation.service.RoomService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+
+
+import java.io.File;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Luxin
@@ -45,9 +55,31 @@ public class AdminRoomController {
                           @RequestParam String description,
                           @RequestParam MultipartFile image
     ) {
-        String imagePath = "../src/main/resources/upload/images" + image.getOriginalFilename();
-        // create the room and save room to database here
-        roomService.addRoom(roomNumber, pricePerNight, maxPeople, available, bedSize, roomType, description, imagePath);
+
+        try {
+
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename()));
+
+            // Obtain the absolute path to the "images" folder inside the project
+            String folderPath = new File("src/main/resources/static/images/").getAbsolutePath();
+
+            // Create a Path object for the destination file
+            Path path = Paths.get(folderPath + File.separator + fileName);
+
+            // Copy the input stream of the image to the destination file
+            try (InputStream inputStream = image.getInputStream()) {
+                Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            //save the file path to the database
+            String imagePath = image.getOriginalFilename();
+            //save all the data in room database
+            roomService.addRoom(roomNumber, pricePerNight, maxPeople, available, bedSize, roomType, description, imagePath);
+
+        } catch (Exception e) {
+            e.printStackTrace(); // Handle the exception to handle error
+        }
+
         return "redirect:/admin";
     }
 
@@ -65,9 +97,35 @@ public class AdminRoomController {
     }
 
     @PostMapping("/update-room")
-    public String saveRoom(@ModelAttribute("room") Room room) {
-        // save update room to database
-        roomService.saveRoom(room);
+    public String saveRoom(@ModelAttribute("room") Room room, @RequestParam("image") MultipartFile image) {
+
+        try {
+
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename()));
+
+            // Obtain the absolute path to the "images" folder inside the project
+            String folderPath = new File("src/main/resources/static/images/").getAbsolutePath();
+
+            // Create a Path object for the destination file
+            Path path = Paths.get(folderPath + File.separator + fileName);
+
+            // Copy the input stream of the image to the destination file
+            try (InputStream inputStream = image.getInputStream()) {
+                Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            //save the file path to the database
+            String imagePath = image.getOriginalFilename();
+            room.setImagePath(imagePath);
+            // save update room to database
+            roomService.saveRoom(room);
+
+        } catch (Exception e) {
+            e.printStackTrace(); // Handle the exception to handle error
+        }
+
+
+
         return "redirect:/admin";
     }
 

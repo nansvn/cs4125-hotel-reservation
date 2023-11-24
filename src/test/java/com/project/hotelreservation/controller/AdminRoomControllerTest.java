@@ -7,8 +7,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.ui.Model;
+
 import java.util.Collections;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,12 +45,16 @@ public class AdminRoomControllerTest {
         verify(model).addAttribute(eq("room"), any());
     }
 
+
     @Test
     public void testSaveRoom() {
+
         Room room = new Room();
-        String viewName = adminRoomController.saveRoom(room);
+        MockMultipartFile image = new MockMultipartFile("image", "image.jpg", "image/jpeg", "image data".getBytes());
+        String viewName = adminRoomController.saveRoom(room, image);
         assertEquals("redirect:/admin", viewName);
         verify(roomService).saveRoom(room);
+
     }
 
     @Test
@@ -68,5 +75,4 @@ public class AdminRoomControllerTest {
         verify(model).addAttribute(eq("listRooms"), any());
     }
 }
-
 

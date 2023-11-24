@@ -50,6 +50,7 @@ public class BookingServiceImpl implements BookingService {
         }
         booking.transitionToState(bookingState);
         bookingRepository.save(booking);
+        room.setAvailable(false);
         roomRepository.save(room);
     }
 
@@ -86,4 +87,3 @@ public class BookingServiceImpl implements BookingService {
 
     }
 }
-

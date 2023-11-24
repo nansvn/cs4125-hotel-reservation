@@ -67,7 +67,7 @@
                     <tr th:each="room : ${listRooms}">
                         <td th:text="${room.roomId}"></td>
                         <td>
-                            <img th:src="@{'../src/main/resources/upload/images/' + ${room.imagePath}}" alt="Room Image"
+                            <img th:src="@{'/images/' + ${room.imagePath}}" alt="Room Image"
                                  width="100" height="100"/>
                         </td>
 
