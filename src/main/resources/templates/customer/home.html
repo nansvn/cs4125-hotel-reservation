@@ -52,7 +52,7 @@
             <div th:each="room : ${rooms}" class="col-md-4 mb-4">
                 <!-- Individual card -->
                 <div class="card">
-                    <img th:src="${room.imagePath}" class="card-img-top" alt="Room image">
+                    <img th:src="@{'/images/' + ${room.imagePath}}" class="card-img-top" alt="Room image">
                     <div class="card-body">
                         <h5 class="card-title"
                             th:text="${#strings.capitalize(room.roomType.toString().toLowerCase())} + ' ' + ${#strings.capitalize(room.bedSize.toString().toLowerCase())}"></h5>
