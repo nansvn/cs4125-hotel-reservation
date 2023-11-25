@@ -4,6 +4,7 @@ import com.project.hotelreservation.model.WebCustomer;
 import com.project.hotelreservation.model.entity.Customer;
 import com.project.hotelreservation.repository.CustomerRepository;
 import com.project.hotelreservation.service.CustomerService;
+import com.project.hotelreservation.service.serviceImpl.CustomerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +24,7 @@ class CustomerServiceTest {
     private CustomerRepository customerRepository;
 
     @InjectMocks
-    private CustomerService customerService;
+    private CustomerServiceImpl customerService;
 
     private Customer mockCustomer;
 
