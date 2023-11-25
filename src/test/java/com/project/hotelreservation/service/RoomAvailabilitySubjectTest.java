@@ -32,5 +32,6 @@ public class RoomAvailabilitySubjectTest {
         Mockito.verify(observer1).update(room);
         Mockito.verify(observer2).update(room);
     }
+
 }
 
