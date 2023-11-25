@@ -1,4 +1,4 @@
-package com.project.hotelreservation.service.serviceImpl;
+package com.project.hotelreservation.service;
 
 import com.project.hotelreservation.model.WebCustomer;
 import com.project.hotelreservation.model.entity.Customer;
@@ -23,7 +23,7 @@ class CustomerServiceTest {
     private CustomerRepository customerRepository;
 
     @InjectMocks
-    private CustomerServiceImpl customerService;
+    private CustomerService customerService;
 
     private Customer mockCustomer;
 
