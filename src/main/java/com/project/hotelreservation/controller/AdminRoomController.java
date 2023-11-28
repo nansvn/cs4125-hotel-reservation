@@ -47,7 +47,8 @@ public class AdminRoomController {
     @PostMapping("/new-room")
     public String addRoom(@RequestParam Integer roomNumber, @RequestParam BigDecimal pricePerNight, @RequestParam Integer maxPeople, @RequestParam boolean available, @RequestParam BedSize bedSize, @RequestParam RoomType roomType, @RequestParam String description, @RequestParam MultipartFile image) {
 
-        String imagePath = "";
+        //get the name of image path
+        String imagePath = image.getOriginalFilename();
 
         try {
 
@@ -64,9 +65,6 @@ public class AdminRoomController {
                 Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
             }
 
-            //save the file path to the database
-            imagePath = image.getOriginalFilename();
-
 
         } catch (Exception e) {
             e.printStackTrace(); // Handle the exception to handle error
@@ -74,6 +72,7 @@ public class AdminRoomController {
 
         //save all the data in room database
         roomService.addRoom(roomNumber, pricePerNight, maxPeople, available, bedSize, roomType, description, imagePath);
+
 
         return "redirect:/admin";
     }
