@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
-
 import java.io.File;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -46,16 +45,9 @@ public class AdminRoomController {
 
     // create the new room and store it in the database
     @PostMapping("/new-room")
-    public String addRoom(@RequestParam Integer roomNumber,
-                          @RequestParam BigDecimal pricePerNight,
-                          @RequestParam Integer maxPeople,
-                          @RequestParam boolean available,
-                          @RequestParam BedSize bedSize,
-                          @RequestParam RoomType roomType,
-                          @RequestParam String description,
-                          @RequestParam MultipartFile image
-    ) {
+    public String addRoom(@RequestParam Integer roomNumber, @RequestParam BigDecimal pricePerNight, @RequestParam Integer maxPeople, @RequestParam boolean available, @RequestParam BedSize bedSize, @RequestParam RoomType roomType, @RequestParam String description, @RequestParam MultipartFile image) {
 
+        String imagePath = "";
         try {
 
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename()));
@@ -72,7 +64,7 @@ public class AdminRoomController {
             }
 
             //save the file path to the database
-            String imagePath = image.getOriginalFilename();
+            imagePath = image.getOriginalFilename();
             //save all the data in room database
             roomService.addRoom(roomNumber, pricePerNight, maxPeople, available, bedSize, roomType, description, imagePath);
 
@@ -80,6 +72,7 @@ public class AdminRoomController {
             e.printStackTrace(); // Handle the exception to handle error
         }
 
+        roomService.addRoom(roomNumber, pricePerNight, maxPeople, available, bedSize, roomType, description, imagePath);
         return "redirect:/admin";
     }
 
@@ -97,34 +90,39 @@ public class AdminRoomController {
     }
 
     @PostMapping("/update-room")
-    public String saveRoom(@ModelAttribute("room") Room room, @RequestParam("image") MultipartFile image) {
+    public String saveRoom(@ModelAttribute("room") Room room, @RequestParam(name = "image", required = false) MultipartFile image) {
 
         try {
+            if (image != null && !image.isEmpty()) {
+                // A new file is chosen, handle it
+                String fileName = StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename()));
 
-            String fileName = StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename()));
+                // Obtain the absolute path to the "images" folder inside the project
+                String folderPath = new File("src/main/resources/static/images/").getAbsolutePath();
 
-            // Obtain the absolute path to the "images" folder inside the project
-            String folderPath = new File("src/main/resources/static/images/").getAbsolutePath();
+                // Create a Path object for the destination file
+                Path path = Paths.get(folderPath + File.separator + fileName);
 
-            // Create a Path object for the destination file
-            Path path = Paths.get(folderPath + File.separator + fileName);
+                // Copy the input stream of the image to the destination file
+                try (InputStream inputStream = image.getInputStream()) {
+                    Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+                }
 
-            // Copy the input stream of the image to the destination file
-            try (InputStream inputStream = image.getInputStream()) {
-                Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+                // Save the file path to the database
+                String imagePath = image.getOriginalFilename();
+                room.setImagePath(imagePath);
+            } else {
+                // No new file is chosen, keep the current file path
+                Room existingRoom = roomService.getRoomById(room.getRoomId());
+                room.setImagePath(existingRoom.getImagePath());
             }
 
-            //save the file path to the database
-            String imagePath = image.getOriginalFilename();
-            room.setImagePath(imagePath);
-            // save update room to database
+            // Save updated room to the database
             roomService.saveRoom(room);
 
         } catch (Exception e) {
             e.printStackTrace(); // Handle the exception to handle error
         }
-
-
 
         return "redirect:/admin";
     }

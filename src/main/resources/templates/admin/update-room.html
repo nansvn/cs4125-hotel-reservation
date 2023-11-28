@@ -78,10 +78,14 @@
                             <label for="description">Description: </label>
                             <input type="text" id="description" name="description" class="form-control" th:value="${room.description}">
                         </div>
+                        <div class="form-group">
+                            <label for="image">Current Image Path: </label>
+                            <p th:if="${not #strings.isEmpty(room.imagePath)}" th:text="${room.imagePath}"></p>
+                        </div>
 
                         <div class="form-group">
-                            <label for="image">Image: </label>
-                            <input type="file" id="image" name="image" class="form-control" th:value="${room.imagePath}">
+                            <label for="Image">New Image: </label>
+                            <input type="file" id="Image" name="image" class="form-control" />
                         </div>
 
 
