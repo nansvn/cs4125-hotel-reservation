@@ -1,6 +1,6 @@
 package com.project.hotelreservation.model;
 
-import com.project.hotelreservation.enums.BookingStatus;
+import com.project.hotelreservation.enums.Status;
 import com.project.hotelreservation.model.entity.Booking;
 
 public class CancelledState implements BookingState {
@@ -17,7 +17,7 @@ public class CancelledState implements BookingState {
 
 
     @Override
-    public BookingStatus getStatus() {
-        return BookingStatus.CANCELLED;
+    public Status getStatus() {
+        return Status.CANCELLED;
     }
 }

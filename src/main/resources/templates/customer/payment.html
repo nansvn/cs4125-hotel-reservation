@@ -27,20 +27,27 @@
     <section class="card booking-form col-6" style="width:60%;margin: auto">
         <div class="card-header">Payment Form</div>
         <div class="card-body">
-            <form action="/make-payment" method="post">
+            <form th:action="@{/make-payment}" method="post">
                 <div class="card-text">
-                    <label for="amount">Amount:</label>
-                    <input type="text" id="amount" name="amount" required><br>
-
+                    <p>Booking ID: <span th:text="${booking.getBookingId()}"></span></p>
+                    <p>Total Price <span th:text="${booking.getPayment().getAmount()}"></span></p>
                     <label for="paymentMethod">Payment Method:</label>
                     <select id="paymentMethod" name="paymentMethod" required>
                         <option value="CASH">Cash</option>
                         <option value="CREDIT_CARD">Credit Card</option>
                         <option value="DEBIT_CARD">Debit Card</option>
-                    </select><br>
-
-                    <label for="bookingId">Booking ID:</label>
-                    <input type="text" id="bookingId" name="bookingId" required><br>
+                    </select>
+                    <br>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="hasMealDeal" id="hasMealDeal">
+                        <label class="form-check-label" for="hasMealDeal">
+                            I want to have extra breakfast(10)
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="hasMealDeal" id="useRewardPoints">
+                        <label class="form-check-label" for="useRewardPoints">
+                            I want to use my reward points
+                        </label>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Make Payment</button>
                 <a class="btn btn-secondary" href="/home">Cancel</a>

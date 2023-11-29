@@ -1,13 +1,11 @@
 package com.project.hotelreservation.controller;
-import com.project.hotelreservation.model.entity.AdditionalServices;
-import com.project.hotelreservation.model.entity.Booking;
-import com.project.hotelreservation.model.entity.Customer;
-import com.project.hotelreservation.model.entity.Room;
+
+import com.project.hotelreservation.model.entity.*;
 import com.project.hotelreservation.service.AdditionalServicesService;
 import com.project.hotelreservation.service.BookingService;
+import com.project.hotelreservation.service.PaymentService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +23,12 @@ import java.util.List;
 @AllArgsConstructor
 public class BookingController {
     private final BookingService bookingService;
+    private final PaymentService paymentService;
     private final AdditionalServicesService additionalServicesService;
 
     @GetMapping("/booking")
     public String showBookingPage(Model model) {
-        // Create a new Booking and set the initial state
+        // create a new Booking and set the initial state
         Booking booking = new Booking();
         model.addAttribute("newBooking", new Booking());
         return "customer/booking";
@@ -60,15 +59,26 @@ public class BookingController {
         Customer customer = (Customer) session.getAttribute("customer");
         Date checkInDate = (Date) session.getAttribute("checkInDate");
         Date checkOutDate = (Date) session.getAttribute("checkOutDate");
+        Booking booking;
         if (serviceIds != null) {
             List<AdditionalServices> selectedServices = additionalServicesService.getServicesByIds(serviceIds);
-           bookingService.save(room, selectedServices, customer, checkInDate, checkOutDate, false); // Payment not completed yet
+            booking = bookingService.save(room, selectedServices, customer, checkInDate, checkOutDate, false);
         } else {
-           bookingService.save(room, null, customer, checkInDate, checkOutDate, false); // Payment not completed yet
+            booking = bookingService.save(room, null, customer, checkInDate, checkOutDate, false);
         }
-        model.addAttribute("room", room);
+        // initialize payment info
+        paymentService.initial(booking);
+
+        if (booking != null) {
+            // save for display
+            model.addAttribute("booking", booking);
+            session.setAttribute("booking", booking);
+            session.setAttribute("payment", booking.getPayment());
+        }
+
         return "customer/booking-confirmation";
     }
+
 
     // view history orders
     @GetMapping("/view-orders")
@@ -83,6 +93,9 @@ public class BookingController {
         }
     }
 
+    /**
+     * @author Luxin
+     */
     // cancel order
     @GetMapping("/cancel-order")
     public String cancelOrders(@RequestParam Long bookingId) {

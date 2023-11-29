@@ -1,11 +1,8 @@
 package com.project.hotelreservation.service.serviceImpl;
 
-import com.project.hotelreservation.enums.BookingStatus;
+import com.project.hotelreservation.enums.Status;
 import com.project.hotelreservation.model.BookingState;
-import com.project.hotelreservation.model.entity.AdditionalServices;
-import com.project.hotelreservation.model.entity.Booking;
-import com.project.hotelreservation.model.entity.Customer;
-import com.project.hotelreservation.model.entity.Room;
+import com.project.hotelreservation.model.entity.*;
 import com.project.hotelreservation.repository.BookingRepository;
 import com.project.hotelreservation.repository.RoomRepository;
 import com.project.hotelreservation.service.BookingService;
@@ -28,7 +25,7 @@ public class BookingServiceImpl implements BookingService {
     private final BookingStateFactory bookingStateFactory;
 
     @Override
-    public void save(Room room, List<AdditionalServices> services, Customer customer, Date checkInDate, Date checkOutDate, boolean paymentCompleted) {
+    public Booking save(Room room, List<AdditionalServices> services, Customer customer, Date checkInDate, Date checkOutDate, boolean paymentCompleted) {
         Booking booking = new Booking();
         booking.setRoom(room);
         booking.setCustomer(customer);
@@ -36,22 +33,20 @@ public class BookingServiceImpl implements BookingService {
         booking.setCheckInDate(checkInDate);
         booking.setCheckOutDate(checkOutDate);
         booking.setBookingDate(Timestamp.from(Instant.now()));
-
         BookingState bookingState;
+
         if (paymentCompleted) {
             booking.complete();
-            bookingState = bookingStateFactory.getBookingState(BookingStatus.COMPLETED);
-
+            bookingState = bookingStateFactory.getBookingState(Status.COMPLETED);
         } else {
             booking.process();
-            bookingState = bookingStateFactory.getBookingState(BookingStatus.PENDING);
-            booking.setPayment(null); // Assume payment information is not available at this point
-
+            bookingState = bookingStateFactory.getBookingState(Status.PENDING);
         }
         booking.transitionToState(bookingState);
         bookingRepository.save(booking);
         room.setAvailable(false);
         roomRepository.save(room);
+        return booking;
     }
 
 
@@ -66,11 +61,11 @@ public class BookingServiceImpl implements BookingService {
         Optional<Booking> optional = bookingRepository.findById(bookingId);
         Booking booking = null;
 
-        //we get the booking from optional
-        if(optional.isPresent()){
+        // we get the booking from optional
+        if (optional.isPresent()) {
             booking = optional.get();
             booking.cancel();
-            BookingState bookingState = bookingStateFactory.getBookingState(BookingStatus.CANCELLED);
+            BookingState bookingState = bookingStateFactory.getBookingState(Status.CANCELLED);
             booking.transitionToState(bookingState);
             bookingRepository.save(booking);
 
@@ -80,10 +75,9 @@ public class BookingServiceImpl implements BookingService {
 
             bookingRepository.deleteBookingByBookingId(bookingId);
 
-        }else{
+        } else {
             throw new RuntimeException("Booking not found for id ::" + bookingId);
         }
-
 
     }
 }

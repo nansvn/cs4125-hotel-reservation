@@ -1,7 +1,7 @@
 package com.project.hotelreservation.model;
 
 
-import com.project.hotelreservation.enums.BookingStatus;
+import com.project.hotelreservation.enums.Status;
 import com.project.hotelreservation.model.entity.Booking;
 public class PendingState implements BookingState {
 
@@ -11,7 +11,7 @@ public class PendingState implements BookingState {
     }
 
     @Override
-    public BookingStatus getStatus() {
-        return BookingStatus.PENDING;
+    public Status getStatus() {
+        return Status.PENDING;
     }
 }

@@ -1,6 +1,6 @@
 package com.project.hotelreservation.model.entity;
 
-import com.project.hotelreservation.enums.BookingStatus;
+import com.project.hotelreservation.enums.Status;
 import com.project.hotelreservation.model.BookingState;
 import com.project.hotelreservation.model.PendingState;
 import jakarta.persistence.*;
@@ -34,7 +34,7 @@ public class Booking {
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private BookingStatus status;
+    private Status status;
 
     @Transient
     private BookingState bookingState;
@@ -58,7 +58,7 @@ public class Booking {
     private List<AdditionalServices> additionalServices;
 
     public Booking() {
-        this.status = BookingStatus.PENDING;
+        this.status = Status.PENDING;
         this.bookingState = new PendingState();
     }
 
