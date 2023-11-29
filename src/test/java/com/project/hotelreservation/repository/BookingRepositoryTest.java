@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@DataJpaTest
 public class BookingRepositoryTest {
 
     @Mock
@@ -37,8 +36,8 @@ public class BookingRepositoryTest {
         // Set up common data before each test
         customer = new Customer(); // Use the class-level customer variable
         customer.setFirstName("John");
-        customer.setLastName("Doe");
-        customer.setEmail("john.doe@example.com");
+        customer.setLastName("Smitch");
+        customer.setEmail("john.doe@sample.com");
         customer.setRewardPoints(100);
 
         Room room = new Room();
@@ -49,7 +48,7 @@ public class BookingRepositoryTest {
         room.setBedSize(BedSize.DOUBLE);
         room.setRoomType(RoomType.STANDARD);
         room.setDescription("Standard room with queen bed");
-        room.setImagePath("path/to/image.jpg");
+        room.setImagePath("image.jpg");
 
         booking = new Booking();
         booking.setCheckInDate(new Date());
