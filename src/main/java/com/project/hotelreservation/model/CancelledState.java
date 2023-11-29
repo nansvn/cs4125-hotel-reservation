@@ -12,7 +12,7 @@ public class CancelledState implements BookingState {
     }
 
     private void processRefund(Booking booking) {
-        System.out.println("Waiting for payment to proceed....");
+        System.out.println("Refund is made....");
     }
 
 

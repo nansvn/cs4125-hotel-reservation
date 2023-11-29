@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@DataJpaTest
 public class RoomRepositoryTest {
 
     @Mock
@@ -38,7 +37,7 @@ public class RoomRepositoryTest {
         room.setBedSize(BedSize.DOUBLE);
         room.setRoomType(RoomType.STANDARD);
         room.setDescription("Standard room with queen bed");
-        room.setImagePath("path/to/image.jpg");
+        room.setImagePath("image.jpg");
     }
 
     @Test
