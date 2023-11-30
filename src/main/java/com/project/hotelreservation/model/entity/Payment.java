@@ -2,6 +2,7 @@ package com.project.hotelreservation.model.entity;
 
 import com.project.hotelreservation.decorator.IPayment;
 import com.project.hotelreservation.enums.PaymentMethod;
+import com.project.hotelreservation.enums.Status;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
 import lombok.Data;
@@ -28,7 +29,8 @@ public class Payment implements IPayment {
     private PaymentMethod paymentMethod;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @OneToOne
     @JoinColumn(name = "booking_id")
