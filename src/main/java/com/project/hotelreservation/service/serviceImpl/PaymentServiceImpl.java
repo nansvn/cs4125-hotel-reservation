@@ -22,26 +22,32 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public void initial(Booking booking) {
-        Payment payment = new Payment();
+        // Check if a payment already exists for the booking
+        Payment existingPayment = paymentRepository.findByBooking(booking);
 
-        // set booking
-        payment.setBooking(booking);
-
-        // calculate and set amount
-        double roomPrice = getRoomPrice(booking);
-        double servicePrice = 0.0;
-        if (!booking.getAdditionalServices().isEmpty()) {
-            // calculate the service fees if available
-            for (AdditionalServices service : booking.getAdditionalServices()) {
-                servicePrice += service.getPrice();
+        if (existingPayment == null) {
+            Payment payment = new Payment();
+            // set booking
+            payment.setBooking(booking);
+            // calculate and set amount
+            double roomPrice = getRoomPrice(booking);
+            double servicePrice = 0.0;
+            if (!booking.getAdditionalServices().isEmpty()) {
+                // calculate the service fees if available
+                for (AdditionalServices service : booking.getAdditionalServices()) {
+                    servicePrice += service.getPrice();
+                }
             }
+            payment.setAmount(roomPrice + servicePrice);
+
+            // set status
+            payment.setStatus(String.valueOf(Status.PENDING));
+
+            // Set the payment in the booking
+            booking.setPayment(payment);
+
+            paymentRepository.save(payment);
         }
-        payment.setAmount(roomPrice + servicePrice);
-
-        // set status
-        payment.setStatus(String.valueOf(Status.PENDING));
-
-        paymentRepository.save(payment);
     }
 
     private static double getRoomPrice(Booking booking) {
@@ -74,4 +80,11 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment findPaymentByBooking(Booking booking) {
         return paymentRepository.findByBooking(booking);
     }
+
+    public void deletePayment(Payment payment) {
+        if (payment != null) {
+            paymentRepository.delete(payment);
+        }
+    }
+
 }

@@ -5,6 +5,7 @@ import com.project.hotelreservation.model.entity.*;
 import com.project.hotelreservation.service.BookingService;
 import com.project.hotelreservation.service.PaymentRequest;
 import com.project.hotelreservation.service.PaymentService;
+import com.project.hotelreservation.service.serviceImpl.BookingServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @AllArgsConstructor
 public class PaymentController {
     private final PaymentService paymentService;
+    private final BookingServiceImpl bookingService;
 
     @GetMapping("/payment")
     public String showPaymentPage(HttpSession session, Model model) {
@@ -36,9 +38,14 @@ public class PaymentController {
                               @RequestParam(value = "useRewardPoints", defaultValue = "false") boolean useRewardPoints,
                               HttpSession session) {
         Payment payment = (Payment) session.getAttribute("payment");
+        Booking booking = (Booking) session.getAttribute("booking");
 
         // Make a payment using the returned booking object
         paymentService.makePayment(payment, PaymentMethod.valueOf(paymentMethod), hasMealDeal, useRewardPoints);
+
+        // Update the booking status to Complete by marking paymentCompleted as true
+        bookingService.save(booking.getRoom(), booking.getAdditionalServices(), booking.getCustomer(), booking.getCheckInDate(), booking.getCheckOutDate(), true);
+
         if (payment == null) {
             // Handle payment failure
             return "redirect:/payment-failure";
@@ -56,7 +63,3 @@ public class PaymentController {
         return "not-finshied-yet!";
     }
 }
-
-
-
-
