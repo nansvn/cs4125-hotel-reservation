@@ -13,13 +13,10 @@ import java.util.Date;
 public interface PaymentService {
     void initial(Booking booking);
 
-    void makePayment(Payment payment,
+    void makePayment(Booking booking,
                      Customer customer,
                      PaymentMethod paymentMethod,
                      boolean hasMealDeal,
                      boolean useRewardPoints);
-
-    Payment findPaymentByBooking(Booking booking);
-
     void deletePayment(Payment payment);
 }
