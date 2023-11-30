@@ -27,4 +27,8 @@ public class Customer extends User {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Booking> bookings = new ArrayList<>();
+
+    public void deductPoints(int pointsUsed) {
+        rewardPoints -= pointsUsed;
+    }
 }
