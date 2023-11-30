@@ -13,4 +13,6 @@ public interface PaymentService {
     void initial(Booking booking);
     void makePayment(Payment payment, PaymentMethod paymentMethod, boolean hasMealDeal, boolean useRewardPoints);
     Payment findPaymentByBooking(Booking booking);
+
+    void deletePayment(Payment payment);
 }

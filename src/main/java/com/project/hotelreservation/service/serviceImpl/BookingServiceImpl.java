@@ -80,4 +80,10 @@ public class BookingServiceImpl implements BookingService {
         }
 
     }
+
+    public Booking getBookingById(Long bookingId) {
+        return bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking not found for id: " + bookingId));
+    }
+
 }

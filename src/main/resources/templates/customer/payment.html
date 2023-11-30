@@ -38,6 +38,7 @@
                         <option value="DEBIT_CARD">Debit Card</option>
                     </select>
                     <br>
+                    <br>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="hasMealDeal" id="hasMealDeal">
                         <label class="form-check-label" for="hasMealDeal">
@@ -49,8 +50,9 @@
                         </label>
                     </div>
                 </div>
+                <br>
                 <button type="submit" class="btn btn-primary">Make Payment</button>
-                <a class="btn btn-secondary" href="/home">Cancel</a>
+                <a class="btn btn-secondary" th:href="@{/home}">Cancel</a>
             </form>
         </div>
     </section>

@@ -16,4 +16,6 @@ public interface BookingService {
     List<Booking> getOrdersByCustomer(Customer customer);
 
     void cancelOrder(Long bookingId);
+
+    Booking getBookingById(Long bookingId);
 }

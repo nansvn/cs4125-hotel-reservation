@@ -70,6 +70,8 @@ public class BookingController {
         paymentService.initial(booking);
 
         if (booking != null) {
+            // initialize payment info
+            paymentService.initial(booking);
             // save for display
             model.addAttribute("booking", booking);
             session.setAttribute("booking", booking);
@@ -99,6 +101,14 @@ public class BookingController {
     // cancel order
     @GetMapping("/cancel-order")
     public String cancelOrders(@RequestParam Long bookingId) {
+        Booking booking = bookingService.getBookingById(bookingId);
+
+        // Check if the booking has a payment
+        Payment payment = booking.getPayment();
+        if (payment != null) {
+            paymentService.deletePayment(payment);
+        }
+
         bookingService.cancelOrder(bookingId);
         return "redirect:/view-orders";
     }
