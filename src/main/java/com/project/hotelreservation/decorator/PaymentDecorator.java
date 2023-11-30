@@ -1,14 +1,9 @@
 package com.project.hotelreservation.decorator;
 
-import com.project.hotelreservation.model.entity.Payment;
-import lombok.AllArgsConstructor;
+public abstract class PaymentDecorator implements IPayment {
+    protected IPayment payment;
 
-/**
- * @author Nan
- */
-@AllArgsConstructor
-public abstract class PaymentDecorator {
-    protected Payment payment;
-
-    public abstract Payment decorate();
+    public PaymentDecorator(IPayment payment) {
+        this.payment = payment;
+    }
 }

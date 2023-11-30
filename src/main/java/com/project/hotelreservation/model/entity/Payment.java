@@ -1,5 +1,6 @@
 package com.project.hotelreservation.model.entity;
 
+import com.project.hotelreservation.decorator.IPayment;
 import com.project.hotelreservation.enums.PaymentMethod;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
@@ -10,7 +11,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "payment")
-public class Payment {
+public class Payment implements IPayment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_id")
@@ -32,4 +33,9 @@ public class Payment {
     @OneToOne
     @JoinColumn(name = "booking_id")
     private Booking booking;
+
+    @Override
+    public void adjustAmount(double adjustment) {
+        this.amount += adjustment;
+    }
 }
