@@ -1,6 +1,6 @@
 package com.project.hotelreservation.enums;
 
-public enum BookingStatus {
+public enum Status {
     PENDING,
     CANCELLED,
     COMPLETED,

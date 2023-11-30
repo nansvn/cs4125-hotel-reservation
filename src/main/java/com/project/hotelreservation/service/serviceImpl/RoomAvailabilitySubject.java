@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Service
 public class RoomAvailabilitySubject {
-    private List<RoomAvailabilityObserver> observers = new ArrayList<>();
+    private final List<RoomAvailabilityObserver> observers = new ArrayList<>();
     private Room room;
     @Autowired
     public RoomAvailabilitySubject(List<RoomAvailabilityObserver> observers) {

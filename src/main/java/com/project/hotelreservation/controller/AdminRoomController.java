@@ -64,8 +64,6 @@ public class AdminRoomController {
             try (InputStream inputStream = image.getInputStream()) {
                 Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
             }
-
-
         } catch (Exception e) {
             e.printStackTrace(); // Handle the exception to handle error
         }

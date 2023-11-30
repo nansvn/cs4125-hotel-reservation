@@ -31,8 +31,10 @@
         <div class="card-body">
             <div class="card-text">
                 <div class="confirmation">
-                    <p>Congrats! Order has been created.</p>
-                    <!-- show overview of total price etc. here -->
+                    <p>Congrats! Your order has been created.</p>
+                    <p>Room No. <span th:text="${booking.getRoom().getRoomNumber()}"></span></p>
+                    <p>Check-in Date: <span th:text="${booking.getCheckInDate()}"></span></p>
+                    <p>Check-out Date: <span th:text="${booking.getCheckOutDate()}"></span></p>
                 </div>
             </div>
             <p>Do you wish to pay your order now? </p>
