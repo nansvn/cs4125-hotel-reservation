@@ -40,7 +40,7 @@ public class PaymentServiceImpl implements PaymentService {
             payment.setAmount(roomPrice + servicePrice);
 
             // set status
-            payment.setStatus(String.valueOf(Status.PENDING));
+            payment.setStatus(Status.PENDING);
 
             // Set the payment in the booking
             booking.setPayment(payment);
@@ -50,11 +50,12 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void makePayment(Payment payment,
+    public void makePayment(Booking booking,
                             Customer customer,
                             PaymentMethod paymentMethod,
                             boolean hasMealDeal,
                             boolean useRewardPoints) {
+        Payment payment = paymentRepository.getReferenceById(booking.getPayment().getPaymentId());
         IPayment decoratedPayment = payment;
         if (hasMealDeal) {
             decoratedPayment = new WithMealDeal(decoratedPayment);
@@ -71,10 +72,8 @@ public class PaymentServiceImpl implements PaymentService {
             Date currentDate = new Date();
             payment.setPaymentDate(currentDate);
             payment.setPaymentMethod(paymentMethod);
-            payment.setStatus(String.valueOf(Status.COMPLETED));
+            payment.setStatus(Status.COMPLETED);
 
-            // save the updated Payment entity
-            paymentRepository.save(payment);
         } catch (Exception e) {
             // error handler here
             System.err.println("Error during payment processing: " + e.getMessage());
@@ -92,12 +91,6 @@ public class PaymentServiceImpl implements PaymentService {
         int duration = (int) (differenceInMillis / (1000 * 60 * 60 * 24)) + 1;
         // get total price
         return room.getPricePerNight().doubleValue() * duration;
-    }
-
-
-    @Override
-    public Payment findPaymentByBooking(Booking booking) {
-        return paymentRepository.findByBooking(booking);
     }
 
     public void deletePayment(Payment payment) {
